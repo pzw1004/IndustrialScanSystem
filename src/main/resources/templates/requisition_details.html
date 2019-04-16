@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:overflow="http://www.w3.org/1999/xhtml" xmlns: xmlns:>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>检 测 报 告</title>
+    <style>
+        /*divcss5{ width:400px}*/
+        /*divcss5 table{background: #FFFFFF}    !* 此处设置table为黑色 000 *!*/
+        /*divcss5 table td{background: #FFFFFF}  !* 此处设置td为白色，综合table色彩边框即为黑色 *!*/
+
+        /*div3{border-top:1px solid #000}*/
+
+
+    </style>
+
+
+</head>
+<body>
+<center>
+    <div class="div3">
+        <div class="divcss5">
+            <table border=1 title="测试" cellspacing="0" width="800" height="300"> <!-- cellspacing 是td间距设置-->
+                <caption><font size="8">武 昌 船 舶 重 工 有 限 责 任 公 司<br/>
+                    无 损 检 测 申 请 单<br/>
+
+                </font>无损检测室：</caption><br/>
+
+
+                <tr>
+                    <td colspan="2" th:text="'工程编号：'+${requisition.getRequisition_number()}">工程编号：&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/></td>
+                    <td colspan="2" th:text="'工程名称：'+${requisition.getRequisition_name()}">工程名称:<br/><br/></td>
+                    <td colspan="2" th:text="'结构名称：'+${requisition.getRequisition_structurename()}">结构名称:<br/><br/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" th:text="'施工单位：'+${requisition.getRequisition_constructunit()}">施工单位：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'存放位置：'+${requisition.getRequisition_saveplace()}">存放位置：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'钢号：'+${requisition.getRequisition_steelnumber()}">钢号：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" th:text="'焊接方法：'+${requisition.getRequisition_weldingmethod()}">焊接方法：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="3" th:text="'返工次数：'+${requisition.getRequisition_reworktimes()}">返工次数：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr >
+                    <td colspan="1" >焊缝编号：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" >厚度mm：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" >接头形式：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" >检测方法：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" >检测标准及合格级别：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" >备注：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr th:each="picture : ${pictureList}">
+                    <td colspan="1" th:text="${picture.getPicture_number()}" >&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" th:text="${picture.getPicture_thickness()}" >&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" th:text="${picture.getPicture_jointform()}" >&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" th:text="${picture.getPicture_testmethod()}" >&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" th:text="${picture.getPicture_teststandard()}+'/'+${picture.getPicture_qualifylevel()}" >&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" th:text="${picture.getPicture_ps()}" >&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+
+                <tr>
+                    <td colspan="1">共计： 张&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+
+
+
+                <tr>
+                    <td colspan="6">示意图：
+
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">申请人：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2">审核员</td>
+                    <td colspan="2">收件人</td>
+                </tr>
+                <tr>
+                    <td colspan="2">日期：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2">日期：</td>
+                    <td colspan="2">日期：</td>
+                </tr>
+
+
+
+
+            </table>
+        </div>
+    </div>
+</center>
+</body>
+</html>

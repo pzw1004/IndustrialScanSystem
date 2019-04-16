@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:overflow="http://www.w3.org/1999/xhtml" >
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!--<script type="text/javascript" src="js/jquery.js"></script>-->
+    <link rel="stylesheet" href="css/domain.css" type="text/css"><link/>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> <!--  用来支持采用的ajax语法必须包含的js文件  -->
+    <script type="text/javascript" src="js/jquery-form.js"></script>
+    <link href="bootstrap/v3/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<ifframeset >
+    <ifframe th:include="common/top::html" id="frameTop" name="frameTop"/>
+    <ifframe th:include="common/left::html"  id="frameContentLeft" name="frameContentLeft" />
+</ifframeset>
+<body>
+<section id="frameContentRight">
+<form id="form111" enctype="multipart/form-data" method="post" action="#">
+    <!-- 这个可以选择多个文件，而且只可以选图片 -->
+    <input type="file" name="files"  id="fileId" accept="image/*" multiple="multiple">
+    <input type="button" id="btn" value="提交">
+</form>
+</section>
+</body>
+
+<!-- 这里采用ajax替代form表单提交，避免跨域访问问题和浏览器刷新问题</script>-->
+<script>
+
+    
+
+    $(function () {
+        $("#btn").click(function () {
+            var formData = {};
+            formData = new FormData();
+            var this_1=  document.getElementById('fileId');
+            //获取input取得的所有文件
+            var files = this_1.files;
+
+            for (var i = 0, len = files.length; i < len; i++) {
+                //使用append添加键对应的上传的所有文件
+                formData.append('uploadFile', files[i]);
+            }
+            jQuery.ajax({
+                type: 'post',
+                url: "/multiImport",
+                data: formData,
+                contentType: false,
+                processData: false,
+            /*
+            不需要再写数据类型
+            processData设置为false。因为data值是FormData对象，不需要对数据做处理。
+            contentType设置为false，不设置contentType值，因为是由<form>表单构造的FormData对象，且已经声明了属性enctype="multipart/form-data"，所以这里设置为false。
+             */
+                success: function (data) {
+
+                },
+                error: function () {
+
+                }
+            })
+        })
+
+    })
+</script>
+
+
+
+</html>

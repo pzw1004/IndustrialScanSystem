@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:overflow="http://www.w3.org/1999/xhtml" xmlns: xmlns:>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="css/domain.css" type="text/css"><link/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+
+    <title>X光影像管理系统</title>
+    </div>
+    <script type="text/javascript">
+
+
+        function turnon(id){
+
+            var checkbody = "checkbody" +id;
+            if(document.getElementById(checkbody).style.display=='none'){
+                // alert("show");
+                document.getElementById(checkbody).style.display=''
+            }
+        }
+
+        function turnoff(id){
+            var checkbody = "checkbody" +id;
+            document.getElementById(checkbody).style.display='none'
+        }
+
+    </script>
+
+    <style type="text/css">
+        body{
+            font-family: Tahoma,Verdana, Arial, Helvetica, sans-serif;
+            font-size:15px;
+        }
+
+        p, h1, form, button{border:0; margin:0; padding:0;}
+        .spacer{clear:both; height:1px;}
+        /* ———– My Form ———– */
+        .myform{
+            margin:0 auto;
+            width:1500px;
+            padding:14px;
+        }
+
+        /* ———– stylized ———– */
+        #stylized{
+            border:solid 2px #b7ddf2;
+            background:#ebf4fb;
+        }
+
+        #stylized h1 {
+            font-size:16px;
+            font-weight:bold;
+            margin-bottom:8px;
+        }
+
+        #stylized p{
+            font-size:12px;
+            color:#666666;
+            margin-bottom:20px;
+            border-bottom:solid 1px #b7ddf2;
+            padding-bottom:10px;
+        }
+
+        #stylized label{
+            display:block;
+            font-weight:bold;
+            text-align:right;
+            width:140px;
+            float:left;
+        }
+
+        #stylized .small{
+            color:#666666;
+            display:block;
+            font-size:11px;
+            font-weight:normal;
+            text-align:right;
+            width:140px;
+        }
+
+        #stylized input{
+            float:left;
+            font-size:15px;
+            padding:4px 2px;
+            border:solid 1px #aacfe4;
+            width:200px;
+            margin:2px 0 20px 10px;
+        }
+
+        #stylized textarea{
+            float:left;
+            font-size:15px;
+            padding:4px 2px;
+            border:solid 1px #aacfe4;
+            width:200px;
+            margin:2px 0 20px 10px;
+
+        }
+
+        #stylized button{
+            /*float:;*/
+            font-size:15px;
+            padding:4px 2px;
+            border:solid 1px #aacfe4;
+            width:200px;
+            margin:2px 0 20px 10px;
+        }
+
+
+
+        #stylized .sub{
+            clear:both;
+            margin-left:150px;
+            width:120px;
+            height:32px;
+            line-height:20px;
+            border:1px solid #8b9c56;
+           /*// background:url("../images/bt_bg.gif") 0px -64px;*/
+            text-align:center;
+            color:#336600;
+            font-size:15px;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .red{
+            color:#ff0000;
+        }
+        .blue{
+            color:#0000FF;
+        }
+    </style>
+
+</head>
+<ifframeset >
+    <ifframe th:include="common/top::html" id="frameTop" name="frameTop"/>
+    <ifframe th:include="common/left::html"  id="frameContentLeft" name="frameContentLeft" />
+
+</ifframeset>
+<body >
+<section id="frameContentRight">
+
+<br><br><br>
+
+    <div id="stylized" class="myform">
+        <form id="form"  name="form" th:method="post"  th:action="@{|/requisitionUpdateInfo|}" >
+            <h1>请注意确定好信息提交并点击确定修改</h1>
+            <!--<p>副标题说明<span class="red">注意事项</span> 暂无 <span class="blue">数据操作注意事项</span>暂无</p>-->
+            <input type="text" style="display:none" name="requisition_id" id="requisition_id" th:value="${requisition.getRequisition_id()}"/>
+            <input type="text" style="display:none" name="requisition_state" id="requisition_state" th:value="${requisition.getRequisition_state()}"/>
+            <label>工程编号
+                <span class="small">工程编号</span>
+            </label>
+            <input type="text" name="requisition_number" id="requisition_number"  th:value="${requisition.getRequisition_number()}" />
+
+            <label>工程名称
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_name" id="requisition_name" th:value="${requisition.getRequisition_name()}" />
+
+            <label>结构名称
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_structurename" id="requisition_structurename" th:value="${requisition.getRequisition_structurename()}" />
+
+            <label>施工单位
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_constructunit" id="requisition_constructunit" th:value="${requisition.getRequisition_constructunit()}" />
+
+            <label>存放位置
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_saveplace" id="requisition_saveplace" th:value="${requisition.getRequisition_saveplace()}" />
+
+            <label>钢号
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_steelnumber" id="requisition_steelnumber" th:value="${requisition.getRequisition_steelnumber()}" />
+
+            <label>焊接方法
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_weldingmethod" id="requisition_weldingmethod" th:value="${requisition.getRequisition_weldingmethod()}" />
+
+            <label>返工次数
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_reworktimes" id="requisition_reworktimes" th:value="${requisition.getRequisition_reworktimes()}" />
+
+            <label>第一级审核员姓名
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_firstexam_member" readonly='true' style="color:#999;" id="requisition_firstexam_member" th:value="${requisition.getRequisition_firstexam_member()}" />
+
+            <label>第一级审核员操作记录
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_firstexam" readonly='true' style="color:#999;" id="requisition_firstexam" th:value="${requisition.getRequisition_firstexam()}" />
+
+            <label>第一级审核员申请单意见
+                <span class="small"></span>
+            </label>
+            <textarea id="requisition_firstopinion" style="width:700px;height:150px;resize:none;" name="requisition_firstopinion" rows="6" cols="80"  th:text="${requisition.getRequisition_firstopinion()}" onpropertychange="if(this.scrollHeight>80) this.style.posHeight=this.scrollHeight+5">输入几个回车试试</textarea>
+
+            <label>第二级审核员姓名
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_secondexam_member" readonly='true' style="color:#999;" id="requisition_secondexam_member" th:value="${requisition.getRequisition_secondexam_member()}" />
+
+            <label>第二级审核员操作记录
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_secondexam" readonly='true' style="color:#999;" id="requisition_secondexam" th:value="${requisition.getRequisition_secondexam()}" />
+
+            <label>第二级审核员申请单意见
+                <span class="small"></span>
+            </label>
+            <textarea id="requisition_secondopinion" style="width:700px;height:150px;resize:none;" name="requisition_secondopinion" rows="6" cols="80"  th:text="${requisition.getRequisition_secondopinion()}" onpropertychange="if(this.scrollHeight>80) this.style.posHeight=this.scrollHeight+5"></textarea>
+
+            <label>第三级审核员姓名
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_thirdexam_member" readonly='true'style="color:#999;" id="requisition_thirdexam_member" th:value="${requisition.getRequisition_thirdexam_member()}" />
+
+            <label>第三级审核员操作记录
+                <span class="small"></span>
+            </label>
+            <input type="text" name="requisition_thirdexam" readonly='true'style="color:#999;"  id="requisition_thirdexam" th:value="${requisition.getRequisition_thirdexam()}" />
+
+            <label>第三级审核员申请单意见
+                <span class="small"></span>
+            </label>
+            <textarea id="requisition_thirdopinion" style="width:700px;height:150px;resize:none;" name="requisition_thirdopinion" rows="6" cols="80"  th:text="${requisition.getRequisition_thirdopinion()}" onpropertychange="if(this.scrollHeight>80) this.style.posHeight=this.scrollHeight+5"></textarea>
+
+
+
+            <input class="sub"  type="submit" value="提交修改申请单"/>
+
+
+            <div class="spacer"></div>
+
+
+        </form>
+        <!--<button type="button" class="sub" id=""  sec:authorize="hasRole('ROLE_fisrtexam')" th:if="${(requisition.getRequisition_firstexam()==null)}" th:onclick="|javascript:MsgBox(${requisition.getRequisition_id()},1)|">完成审批</button>&nbsp;&nbsp;&nbsp;-->
+
+    <!--<p th:text="${#authentication.principal}"></p>-->
+
+<center>
+        <div style="display:inline-block;">
+    <button id="shenpitongguo" class="sub"  value="审批通过" />审批通过</button>
+    <button id="bohui" class="sub"  value="驳回"/>驳回</button>
+    <button id="printreport" class="sub"  value="打印检测报告"/>打印检测报告</button>
+    <button id="printrequisition" class="sub"  value="打印申请单"/>打印申请单</button>
+            <!--<a href="/requisitionReport">检测报告</a>-->
+    </div>
+        </center>
+    </div>
+<!--<td th:text="${memberRole.getMember_role()}"-->
+    <script th:inline="javascript">
+
+    var memberRole = [[${memberRole}]];
+
+    var quanxian = [[${#authentication.principal}]];
+    var requisition = [[${requisition}]];
+    var memberList = [[${memberList}]];
+    var authority = [[${authority}]];
+    var shenfen = 0;
+    // alert(requisition.requisition_state);
+    //alert(authority.role+"ssssss");
+    for (var i=0;i<memberList.length;i++)
+    {
+
+       if(memberList[i].member_username == quanxian){
+         shenfen =  memberList[i].member_role;
+       }
+    }
+
+
+    $("#printreport").click(function(){
+        //alert("审批通过");
+       // if(confirm("确定要完成审批吗")){
+            window.location.href="requisitionReport?requisition_id="+requisition.requisition_id;
+        //}; //弹出对话框
+
+    });
+
+    $("#printrequisition").click(function(){
+        //alert("审批通过");
+       // if(confirm("确定要完成审批吗")){
+            window.location.href="requisitionDetail?requisition_id="+requisition.requisition_id;
+       // }; //弹出对话框
+
+    });
+    // if(shenfen == 2){
+    //
+    //     //一级审查
+    //     if((requisition.requisition_firstexam=='未审批') || (requisition.requisition_secondexam != '已驳回')||(requisition.requisition_firstexam=='已驳回')){
+    //        // $("#shenpitongguo").attr('disabled',true);
+    //         //按钮可点击，写操作
+    //         $("#shenpitongguo").click(function(){
+    //             if(confirm("确定要完成审批吗")){
+    //                 window.location.href="requisitionShenpi?requisition_id="+requisition.requisition_id+"&shenfen="+shenfen+"&role="+requisition.requisition_state;
+    //             }; //弹出对话框
+    //
+    //         });
+    //
+    //         $("#bohui").click(function(){
+    //             if(confirm("确定要驳回吗")){
+    //                 window.location.href="requisitionBohui?requisition_id="+requisition.requisition_id+"&shenfen="+shenfen+"&role="+requisition.requisition_state;
+    //             }; //弹出对话框
+    //
+    //         });
+    //
+    //     }else{
+    //
+    //        // $("#shenpitongguo").attr('disabled',true);
+    //
+    //     }
+    //
+    //
+    //
+    //
+    //
+    //
+    // }
+    //
+    // if(shenfen == 3){
+    //     //二级审查
+    //     if((requisition.requisition_secondexam=='未审批') || (requisition.requisition_thirdexam != '已驳回') ||(requisition.requisition_secondexam=='已驳回')){
+    //        // $("#shenpitongguo").attr('disabled',true);
+    //        //按钮可点击，写操作
+    //
+    //         $("#shenpitongguo").click(function(){
+    //             if(confirm("确定要完成审批吗")){
+    //                 window.location.href="requisitionShenpi?requisition_id="+requisition.requisition_id+"&shenfen="+shenfen+"&role="+requisition.requisition_state;
+    //             }; //弹出对话框
+    //
+    //         });
+    //
+    //         $("#bohui").click(function(){
+    //             if(confirm("确定要驳回吗")){
+    //                 window.location.href="requisitionBohui?requisition_id="+requisition.requisition_id+"&shenfen="+shenfen+"&role="+requisition.requisition_state;
+    //             }; //弹出对话框
+    //
+    //         });
+    //
+    //     }else{
+    //
+    //         //$("#shenpitongguo").attr('disabled',true);
+    //
+    //     }
+    //
+    // }
+
+    // if(shenfen == 4){
+        //三级审查
+        if((requisition.requisition_state==shenfen) ){
+
+         //   $("#shenpitongguo").attr('disabled',true);
+            //按钮可点击，写操作
+
+            $("#shenpitongguo").click(function(){
+                //alert("审批通过");
+                if(confirm("确定要完成审批吗")){
+                    window.location.href="requisitionShenpi?requisition_id="+requisition.requisition_id+"&shenfen="+shenfen+"&role="+requisition.requisition_state;
+                }; //弹出对话框
+
+            });
+
+            $("#bohui").click(function(){
+
+                if(confirm("确定要驳回吗")){
+                    window.location.href="requisitionBohui?requisition_id="+requisition.requisition_id+"&shenfen="+shenfen+"&role="+requisition.requisition_state;
+                }; //弹出对话框
+
+
+            });
+
+
+
+        // }
+
+    }
+
+
+
+    </script>
+
+
+
+    <script language="javascript">
+        // function MsgBox(id,permission) //声明标识符
+        // {
+        //     if(confirm("确定要完成影像图审批吗")){
+        //         window.location.href="requisitionImgtableShowUpdate?permission="+permission+"&id="+id;
+        //     }; //弹出对话框
+        // }
+
+    </script>
+
+
+    <script type="text/javascript">
+        $('.tablelist tbody tr:odd').addClass('odd');
+    </script>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,10 @@
+2019-03-19 14:49:34.573 - INFO  [nio-8081-exec-4] c.i.C.TestController           : getBussinessLogger===日志测试
+2019-03-19 20:14:28.840 - INFO  [nio-8081-exec-5] c.i.C.TestController           : getBussinessLogger===日志测试
+2019-03-19 20:20:37.925 - INFO  [nio-8081-exec-4] c.i.C.TestController           : getBussinessLogger===日志测试
+2019-03-19 20:21:35.445 - INFO  [nio-8081-exec-4] c.i.C.TestController           : getBussinessLogger===日志测试
+2019-03-19 20:23:09.740 - INFO  [nio-8081-exec-3] c.i.C.TestController           : getBussinessLogger===日志测试
+2019-03-19 21:10:23.677 - INFO  [nio-8081-exec-5] c.i.C.TestController           : getBussinessLogger===日志测试
+2019-03-19 21:26:42.909 - INFO  [nio-8081-exec-4] c.i.C.TestController           : getBussinessLogger===日志测试
+2019-03-19 21:28:34.730 - INFO  [nio-8081-exec-3] c.i.C.TestController           : getBussinessLogger===日志测试
+2019-03-19 21:33:29.558 - INFO  [nio-8081-exec-3] c.i.C.TestController           : getBussinessLogger===日志测试
+2019-03-19 21:37:50.228 - INFO  [nio-8081-exec-3] c.i.C.TestController           : getBussinessLogger===日志测试

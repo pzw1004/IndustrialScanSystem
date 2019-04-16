@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:overflow="http://www.w3.org/1999/xhtml" xmlns: xmlns:>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="css/domain.css" type="text/css"><link/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+
+    <title>X光影像管理系统</title>
+    </div>
+    <script type="text/javascript">
+            function sumbit_sure(){
+                var gnl=confirm("确定要提交?");
+                if (gnl==true){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
+    </script>
+
+    <style type="text/css">
+        body{
+            font-family: Tahoma,Verdana, Arial, Helvetica, sans-serif;
+            font-size:15px;
+        }
+
+        p, h1, form, button{border:0; margin:0; padding:0;}
+        .spacer{clear:both; height:1px;}
+        /* ———– My Form ———– */
+        .myform{
+            margin:0 auto;
+            width:450px;
+            padding:20px;
+        }
+
+        /* ———– stylized ———– */
+        #stylized{
+            border:solid 2px #b7ddf2;
+            background:#ebf4fb;
+        }
+
+        #stylized h1 {
+            font-size:16px;
+            font-weight:bold;
+            margin-bottom:8px;
+        }
+
+        #stylized p{
+            font-size:12px;
+            color:#666666;
+            margin-bottom:20px;
+            border-bottom:solid 1px #b7ddf2;
+            padding-bottom:10px;
+        }
+
+        #stylized label{
+            display:block;
+            font-weight:bold;
+            text-align:right;
+            width:140px;
+            float:left;
+        }
+
+        #stylized .small{
+            color:#666666;
+            display:block;
+            font-size:11px;
+            font-weight:normal;
+            text-align:right;
+            width:140px;
+        }
+
+        #stylized input{
+            float:left;
+            font-size:15px;
+            padding:4px 2px;
+            border:solid 1px #aacfe4;
+            width:200px;
+            margin:2px 0 20px 10px;
+        }
+
+        #stylized select{
+            float:left;
+            font-size:15px;
+            padding:4px 2px;
+            border:solid 1px #aacfe4;
+            width:200px;
+            margin:2px 0 20px 10px;
+        }
+
+        #stylized .sub{
+            clear:both;
+            margin-left:150px;
+            width:120px;
+            height:32px;
+            line-height:20px;
+            border:1px solid #8b9c56;
+            /*// background:url("../images/bt_bg.gif") 0px -64px;*/
+            text-align:center;
+            color:#336600;
+            font-size:15px;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .red{
+            color:#ff0000;
+        }
+        .blue{
+            color:#0000FF;
+        }
+    </style>
+
+</head>
+<ifframeset >
+    <ifframe th:include="common/top::html" id="frameTop" name="frameTop"/>
+    <ifframe th:include="common/left::html"  id="frameContentLeft" name="frameContentLeft" />
+
+</ifframeset>
+<body >
+<section id="frameContentRight">
+
+    <br><br><br>
+
+    <div id="stylized" class="myform">
+        <form id="form"  name="form" method="post"  action="/memberlistAddInfo" onsubmit="return sumbit_sure()">
+            <h1>请注意确定好信息提交并点击确定</h1>
+            <p>副标题说明<span class="red">注意事项</span> 暂无 <span class="blue">数据操作注意事项</span>暂无</p>
+            <!--<input type="text" style="display:none" name="member_id" id="member_id" />-->
+            <label>成员姓名
+                <span class="small"></span>
+            </label>
+            <input type="text" name="member_name" id="member_name"  />
+
+            <label>成员电话
+                <span class="small"></span>
+            </label>
+            <input type="text" name="member_phone" id="member_phone"  />
+
+            <label>成员性别
+                <span class="small"></span>
+            </label>
+            <select type="text" name="member_sex" id="member_sex"  />
+            <option value="男">男</option>
+            <option value="女">女</option>
+            </select>
+
+            <label>成员工号
+                <span class="small"></span>
+            </label>
+            <input type="text" name="member_number" id="member_number" />
+
+            <label>成员地址
+                <span class="small"></span>
+            </label>
+            <input type="text" name="member_address" id="member_address"  />
+
+
+
+            <label>成员账号
+                <span class="small"></span>
+            </label>
+            <input type="text" name="member_username" id="member_username" />
+
+            <label>成员密码
+                <span class="small"></span>
+            </label>
+            <input type="text" name="member_password" id="member_password" />
+
+            <label>成员权限
+                <span class="small"></span>
+            </label>
+            <select type="text" name="member_role" id="member_role"  />
+            <option value="1">管理员</option>
+            <option value="2">一级审查员</option>
+            <option value="3">二级审查员</option>
+            <option value="4">三级审查员</option>
+            <option value="5">扫描员</option>
+            </select>
+
+            <input class="sub" type="submit" value="提交"/>
+            <div class="spacer"></div>
+
+
+
+
+        </form>
+    </div>
+
+
+
+    <script type="text/javascript">
+        $('.tablelist tbody tr:odd').addClass('odd');
+    </script>
+    </div>
+</section>
+</body>
+</html>

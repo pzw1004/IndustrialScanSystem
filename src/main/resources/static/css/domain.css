@@ -1,0 +1,137 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: auto;
+    height: 100%;
+    max-height: 100%;
+
+}
+
+#frameTop
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 90px;
+    width: 100%;
+    overflow: auto;
+    vertical-align: middle;
+}
+
+#frameContentLeft
+{
+    position: fixed;
+    top: 88px;
+    left: 0;
+    height: 100%;
+    width: 180px;
+    overflow: hidden;
+    vertical-align: top;
+
+}
+
+#frameContentRight
+{
+    position: absolute;
+    left: 180px;
+    top: 88px;
+    height: 100%;
+    width: 90%;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    background: #ffffff;
+
+}
+
+/*#frameContentRight #canvas {      老版本在右侧进行修改的但无法正常画图，可以正常显示*/
+/*position: absolute;*/
+    /*left: 100px;*/
+    /*top: 150px;*/
+    /*height: 50%;*/
+    /*width: 80%;*/
+    /*margin: 0px;*/
+    /*background: #ffffff;*/
+    /*border: thin solid #aaaaaa;*/
+    /*overflow: hidden;*/
+    /*bottom: 0;*/
+/*}*/
+
+/*#frameContentRight #drawRetangleCanvas {*/
+    /*position: absolute;*/
+    /*left: 100px;*/
+    /*top: 150px;*/
+    /*height: 50%;*/
+    /*width: 80%;*/
+    /*margin: 0px;*/
+    /*border: thin solid #aaaaaa;*/
+    /*overflow: hidden;*/
+    /*bottom: 0;*/
+/*}*/
+
+/*#canvasAndSvg{*/
+    /*position: absolute;*/
+    /*left: 60px;*/
+    /*top: 88px;*/
+    /*width: 90%;*/
+/*}*/
+
+/*#canvasAndSvg #canvasDiv{*/
+
+    /*background: #ffffff;*/
+    /*border: thin solid #aaaaaa;*/
+/*}*/
+
+/*#canvasAndSvg #svgDi{*/
+
+    /*z-index: 1;*/
+/*}*/
+#ImgUtils{
+    position: absolute;
+    left: 60px;
+    top: 500px;
+    height: 50%;
+    width: 90%;
+    /*margin: 20px;*/
+    border: thin solid #aaaaaa;
+    overflow: auto;
+    /*bottom: 0;*/
+
+}
+
+#ImgInfo{
+    position: absolute;
+    left: 60px;
+    top: 720px;
+    height: 50%;
+    width: 90%;
+    /*margin: 20px;*/
+    border: thin solid #aaaaaa;
+    overflow: auto;
+    /*bottom: 0;*/
+}
+
+/*#canvas {*/
+    /*position: absolute;*/
+    /*left: 60px;*/
+    /*top: 88px;*/
+    /*width: 90%;*/
+    /*overflow: auto;*/
+    /*bottom: 0;*/
+    /*right: 0;*/
+    /*background: #ffffff;*/
+    /*border: thin solid #aaaaaa;*/
+/*}*/
+
+/*#drawRetangleCanvas {*/
+    /*position: absolute;*/
+    /*left: 60px;*/
+    /*top: 88px;*/
+    /*width: 90%;*/
+    /*overflow: auto;*/
+    /*bottom: 0;*/
+    /*right: 0;*/
+    /*border: thin solid #aaaaaa;*/
+/*}*/

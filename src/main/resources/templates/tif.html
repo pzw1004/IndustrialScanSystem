@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:overflow="http://www.w3.org/1999/xhtml" >
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> <!--  用来支持采用的ajax语法必须包含的js文件  -->
+    <script type="text/javascript" src="js/jquery-form.js"></script>
+    <link href="bootstrap/v3/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <!--<script type="text/javascript" src="js/html_js/imgtable_show.js"></script>-->
+    <!--<script type="text/javascript" src="js/html_js/image_processing.js"></script>-->
+    <script type="text/javascript" src="js/d3.v4.min.js"></script>
+    <title>X光影像图原图</title>
+    <style>
+        rect {
+            cursor: move;
+            /*//stroke: blue;*/
+            fill:rgb(0,0,0);
+            /*fill-rule: nonzero;*/
+            fill-opacity: 0;
+        }
+        /*按父容器宽度自动缩放，并且保持图片原本的长宽比*/
+        img{
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        svg{
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 50%;
+        }
+
+        rect{
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            cursor: move;
+            /*//stroke: blue;*/
+            fill:rgb(0,0,0);
+            /*fill-rule: nonzero;*/
+            fill-opacity: 0;
+
+            /*hover:url(javascript:alert("1111"));*/
+
+        }
+        rect.moving {
+            stroke: blue
+        }
+        /*circle{*/
+            /*width: auto;*/
+            /*height: auto;*/
+            /*max-width: 100%;*/
+            /*max-height: 100%;*/
+        /*}*/
+
+        /*text{*/
+            /*width: auto;*/
+            /*height: auto;*/
+            /*max-width: 100%;*/
+            /*max-height: 100%;*/
+        /*}*/
+
+
+    </style>
+</head>
+<body style="text-align: center">
+<center>
+<div>
+<img src="images/555.tif" type="image/tiff" style="position: absolute;z-index: 1;">
+<!--<svg style="position: absolute;left: 120px;top: 88px;z-index: 2;"  id = "drawRectangleList"version="1.1" baseProfile="full" width="1400" height="400" xmlns="http://www.w3.org/2000/svg">-->
+    <!--<rect width="300" height="100" style="fill:red;"/> -->
+<!--</svg>-->
+<svg  id = "drawRectangleList" version="1.1"  width="6000" height="400" style="position: absolute;z-index: 2;" xmlns="http://www.w3.org/2000/svg" >
+    <rect width="300" height="100" style="fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)"/>
+    <circle cx="150" cy="100" r="80" style="fill:green;"/>
+    <text x="100" y="125" font-size="60" style="fill:white">SVG</text>
+</svg>
+</div>
+
+
+<section id="ImgUtils" style="position: absolute;top: 600px;margin:0 auto;">
+    <div style="display:block;margin: 20px " >
+        <div id="stylized" class="myform">
+            <form id="mysubform"  name="mysubform" method="post"  action="/RectangleDamageSave" onsubmit="return saveReport();">
+
+                <label>损伤类型:</label>
+                <select type="text" name="damagetype_id" id="damagetype_id"  />
+                <option value="0" ></option>
+                <option value="1" >圆形缺陷</option>
+                <option value="2" >条形缺陷</option>
+                <option value="3" >未焊透</option>
+                <option value="4" >未熔合</option>
+                <option value="5" >裂纹</option>
+                </select>
+                <!--<label>矩形框id测试:</label>   style="display:none"-->
+                <input id="rect_id" name="rect_id" style="display:none"/>
+                <input id="x1" name="x1" style="display:none"/>
+                <input id="y1" name="y1" style="display:none"/>
+                <input id="x2" name="x2" style="display:none"/>
+                <input id="y2" name="y2" style="display:none"/>
+                <input id="picture_id" name="picture_id" style="display:none"th:value="${picture.getPicture_id()}"/>
+                <input id="retangle_author" name="retangle_author" style="display:none"/>
+                <input id="retanglesubmit" name="retanglesubmit"class="sub" type="submit" value="确定"/>
+                <div class="spacer"></div>
+            </form>
+        </div>
+        <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+    </div>
+    <button type="button"  id="upPaper" onclick="upPage();">上一张</button>
+    <button type="button"  id="fanse">图片反色</button>
+    <button type="button"  id="StartDraw" onclick="controlStartDraw();">开始标记</button>
+    <button type="button"  id="OverDraw" onclick="controlOverDraw();"style="display: none">结束标记</button>
+    <button type="button"  id="saveRectangle">保存标记矩形框</button>
+    <!--<button type="button"  id="lookOrginalPicture" onclick="lookOrginalPicture();">查看原图</button>-->
+    <button type="button"  id="AIprocess">进行AI诊断</button>
+    <button type="button"  id="ControlAIprocess" >显示/隐藏AI诊断结果</button>
+    <button type="button"  id="nextPaper" onclick="nextPage();">下一张</button>
+
+</section>
+测试显示内容！！！！！
+</center>
+</body>
+<script th:inline = "javascript">
+    /**
+     * 获取当前影像图id后根据点击的按钮跳转前往对应的后端接口
+     * @type {*[]}
+     */
+    picture_id = [[${picture.picture_id}]];
+    //alert(picture_id);
+
+    function upPage() {
+        window.location.href="upPagePicture?picture_id="+picture_id;
+    }
+    function nextPage() {
+        window.location.href="nextPagePicture?picture_id="+picture_id;
+    }
+
+    function lookOrginalPicture() {
+        window.location.href="originalPicture?id="+picture_id;
+    }
+
+    var retanglewidth = 0;
+    var retangleheight = 0;
+    var saveUpdateRectId = 0;
+    var saveRectIdArray = new Array();
+    var saveAIRectIdArray = new Array();
+
+    var damagetype_id = document.getElementById('damagetype_id');
+    function updateSubmitInfo(rect_id,x1,x2,y1,y2,retangle_author,retangle_damage_type) {
+        $('#rect_id').val(rect_id);
+        $('#x1').val(parseInt(x1));
+        $('#x2').val(parseInt(x2));
+        $('#y1').val(parseInt(y1));
+        $('#y2').val(parseInt(y2));
+        $('#retangle_author').val(retangle_author);
+
+        damagetype_id[retangle_damage_type].selected = true;//选中
+    }
+
+
+    var controlAi = new Array();//动态控制显示ai探伤结果
+    var ControlAIprocess = document.getElementById("ControlAIprocess");
+
+    ControlAIprocess.onclick = function () {
+        var tempsvgDOM = document.getElementById("drawRectangleList");
+        var Controlrects = tempsvgDOM.getElementsByTagName("rect");
+
+        // if(saveRectIdArray.length == 1){  //根据存储是否有值来觉得是否显示对应颜色的rect方框
+        //     tempid = saveRectIdArray.pop();
+        //     document.getElementById(tempid).setAttribute("stroke","red");
+        // }
+        if(saveAIRectIdArray.length == 1){//根据存储是否有值来觉得是否显示对应颜色的rect方框
+            tempid = saveAIRectIdArray.pop();
+            document.getElementById(tempid).setAttribute("stroke","yellow");
+        }
+
+
+        if(controlAi.length<1) {  //根据数组存储内容判断是否展开/隐藏AI检测方框
+            controlAi.push(1);
+
+            for (j = 0; j < Controlrects.length; j++) {
+                var temp = new Array();
+
+                temp[0] = Controlrects[j].getAttribute("id");
+                temp[1] = Controlrects[j].getAttribute("stroke");
+
+                if (temp[1] == 'yellow') {
+                    // temp[4]='Algorithm';
+                    var tempobj = document.getElementById(temp[0]);
+                    tempobj.setAttribute('style', 'display:none');
+                }
+
+
+            }
+
+        }else {
+            controlAi.pop();
+            for (j = 0; j < Controlrects.length; j++) {
+                var temp = new Array();
+
+                temp[0] = Controlrects[j].getAttribute("id");
+                temp[1] = Controlrects[j].getAttribute("stroke");
+
+                if (temp[1] == 'yellow') {
+                    // temp[4]='Algorithm';
+                    var tempobj = document.getElementById(temp[0]);
+                    tempobj.setAttribute('style', '');
+                }
+
+
+            }
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+    var AIprocess = document.getElementById("AIprocess");
+    var tempicture = [[${picture}]];
+
+    AIresult = tempicture.picture_AIresult;
+    AIprocess.onclick = function () {
+        //alert('这里是内部');
+        if(AIresult == 0){
+            if(confirm("开始进行AI检测")){
+                //window.location.href="AIprocess?id="+tempicture.picture_id;
+                $.ajax({
+                    url: '/detectionById_backstage',
+                    //url: 'http://192.168.31.143:8888//fakedata',
+                    type: 'post',
+                    // type: 'get',
+                    data: {
+                        'id':tempicture.picture_id
+                    },
+                    traditional:true,//用传统方式序列化数据
+
+                })
+                    .success(function(data) {
+                        alert("保存选择框成功");
+                    })
+                //     .error(function() {
+                //     alert("提交失败");
+                // });
+
+                //location.reload();
+            };
+
+            setInterval(test, 4000);
+
+        }
+        if(AIresult == 1){
+            alert("正在进行AI检测，请稍后");
+        }
+        if(AIresult == 2){
+            alert("显示检测结果");
+            // location.reload();
+        }
+
+    }
+
+    function test(){
+        //alert("正在执行AI检测，请稍后")
+        location.reload();
+    }
+
+
+
+    var svg = d3.select("svg");        //选取svg标签
+    function loadRect(x1,y1,w,h,retangle_id,retangle_author,retangle_damage_type) {//处理人工绘制得到的矩形框的显示
+        rect = svg.append("rect")       //通过取出的rect信息，根据svg标签一一显示在前端页面
+            .attr("x", x1)
+            .attr("y", y1)
+            .attr("id", parseInt(x1)+"a"+parseInt(y1)+"b"+parseInt(w)+"a"+parseInt(h)+"b")
+            .attr("fill", "none")
+            .attr("stroke", "red")
+            .attr("stroke-width", 1)
+            .attr("width", w)
+            .attr("height", h)
+
+            .on("dblclick",function(){
+                var message = confirm("是否要删除此框：x="+x1+",y="+y1+"?");
+                document.getElementById(parseInt(x1)+"a"+parseInt(y1)+"b"+parseInt(w)+"a"+parseInt(h)+"b").setAttribute("stroke","black");
+                //alert(document.getElementById(parseInt(x1)+"a"+parseInt(y1)+"b"+parseInt(w)+"a"+parseInt(h)+"b").setAttribute("stroke","black"));
+                if(message == true){
+
+                    $('#'+parseInt(x1)+"a"+parseInt(y1)+"b"+parseInt(w)+"a"+parseInt(h)+"b").remove();
+
+                }
+                document.getElementById(parseInt(x1)+"a"+parseInt(y1)+"b"+parseInt(w)+"a"+parseInt(h)+"b").setAttribute("stroke","red");
+                return false;
+            })
+            .on("click",function(){
+                document.getElementById(parseInt(x1)+"a"+parseInt(y1)+"b"+parseInt(w)+"a"+parseInt(h)+"b").setAttribute("stroke","black");
+                saveUpdateRectId = parseInt(x1)+"a"+parseInt(y1)+"b"+parseInt(w)+"a"+parseInt(h)+"b";
+
+                if(saveRectIdArray.length == 1){  //根据存储是否有值来觉得是否显示对应颜色的rect方框
+                    tempid = saveRectIdArray.pop();
+                    document.getElementById(tempid).setAttribute("stroke","red");
+                }
+                if(saveAIRectIdArray.length == 1){//根据存储是否有值来觉得是否显示对应颜色的rect方框
+                    tempid = saveAIRectIdArray.pop();
+                    document.getElementById(tempid).setAttribute("stroke","yellow");
+                }
+                saveRectIdArray.push(saveUpdateRectId);
+
+                updateSubmitInfo(retangle_id,x1,w+x1,y1,h+y1,retangle_author,retangle_damage_type);//调用填充表单函数
+
+                return false;
+            });
+    }
+
+    function loadAIRect(x1,y1,w,h,retangle_id,retangle_author,retangle_damage_type) {  //处理算法得到的矩形框的显示
+        rect = svg.append("rect")               //通过取出的rect信息，根据svg标签一一显示在前端页面
+            .attr("x", x1)
+            .attr("y", y1)
+            .attr("id", parseInt(x1)+"aa"+parseInt(y1)+"bb"+parseInt(w)+"aa"+parseInt(h)+"bb")
+            .attr("fill", "none")
+            .attr("stroke", "yellow")
+            .attr("stroke-width", 1)
+            .attr("width", w)
+            .attr("height", h)
+
+            .on("dblclick",function(){
+                var message = confirm("是否要删除此框：x="+x1+",y="+y1+"?");
+                document.getElementById(parseInt(x1)+"aa"+parseInt(y1)+"bb"+parseInt(w)+"aa"+parseInt(h)+"bb").setAttribute("stroke","black");
+                if(message == true){
+
+                    $('#'+parseInt(x1)+"aa"+parseInt(y1)+"bb"+parseInt(w)+"aa"+parseInt(h)+"bb").remove();
+
+                }
+                document.getElementById(parseInt(x1)+"aa"+parseInt(y1)+"bb"+parseInt(w)+"aa"+parseInt(h)+"bb").setAttribute("stroke","yellow");
+                return false;
+            })
+            .on("click",function(){
+                document.getElementById(parseInt(x1)+"aa"+parseInt(y1)+"bb"+parseInt(w)+"aa"+parseInt(h)+"bb").setAttribute("stroke","black");
+                saveUpdateRectId = parseInt(x1)+"aa"+parseInt(y1)+"bb"+parseInt(w)+"aa"+parseInt(h)+"bb";
+
+                if(saveAIRectIdArray.length == 1){
+                    tempid = saveAIRectIdArray.pop();
+                    document.getElementById(tempid).setAttribute("stroke","yellow");
+                }
+                if(saveRectIdArray.length == 1){
+                    tempid = saveRectIdArray.pop();
+                    document.getElementById(tempid).setAttribute("stroke","red");
+                }
+                saveAIRectIdArray.push(saveUpdateRectId);
+
+                updateSubmitInfo(retangle_id,x1,w+x1,y1,h+y1,retangle_author,retangle_damage_type);//调用填充表单函数
+
+                return false;
+            });
+    }
+
+    function saveReport() { // jquery 表单提交
+        // alert("ssss");
+        $("#mysubform").ajaxSubmit(function(message) {
+            // 对于表单提交成功后处理，message为提交页面saveReport.htm的返回内容
+            alert("保存成功");
+            location.reload();
+
+        });
+        return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+    }
+
+    var retangle = [[${retangleList}]];  //根据影像图编号获取所有矩形框信息
+    var picture_width = [[${picture.picture_width}]];
+    var picture_height = [[${picture.picture_height}]];
+
+
+
+    for ( i = 0; i < retangle.length; i++){   //循环遍历取出方框所有信息
+
+
+
+        var x1 = retangle[i].retangle_x1;
+        var y1 = retangle[i].retangle_y1;
+        var x2 = retangle[i].retangle_x2;
+        var y2 = retangle[i].retangle_y2;
+        var retangle_id = retangle[i].retangle_id;
+        var retangle_author = retangle[i].retangle_author;
+        var retangle_damage_type = retangle[i].retangle_damage_type;
+        x1 = x1*1400.0/picture_width;
+        y1 = y1*400.0/picture_height;
+        x2 = x2*1400.0/picture_width;
+        y2 = y2*400.0/picture_height;
+
+        var rectangle_width = x2 - x1;
+        var rectangle_height = y2 - y1;
+
+
+//alert(retangle_damage_type);
+        if(retangle_author=='Algorithm'){     //判断rect矩形框author来调用不同的页面显示方框
+            loadAIRect(x1,y1,rectangle_width,rectangle_height,retangle_id,retangle_author,retangle_damage_type);
+        }else {
+            loadRect(x1, y1, rectangle_width, rectangle_height,retangle_id,retangle_author,retangle_damage_type);
+        }
+
+
+    }
+
+
+
+
+    function RectData(x1,y1,x2,y2,retangle_author) {   //初始化方框对象
+        this.x1 = x1;
+        this.x2 = x2;
+        this.y1 = y1;
+        this.y2 = y2;
+        this.retangle_author = retangle_author;
+
+    }
+
+    function ss(rectangleArry,picture_id) {  //通过ajax存储当前页面所有方框
+        // alert(rectangleArry);
+        // alert(picture_id);
+        alert(JSON.stringify(rectangleArry));
+        $.ajax({
+            url: '/getRectangleArray',
+            type: 'get',
+            data: {
+                'rectangleJSON':JSON.stringify(rectangleArry),
+                'picture_id':picture_id
+            },
+            traditional:true,//用传统方式序列化数据
+
+        })
+            .success(function(data) {
+                alert("保存选择框成功");
+            }).error(function() {
+            alert("提交失败");
+        });
+    };
+
+    var saveRectangleBtn = document.getElementById("saveRectangle");
+
+    saveRectangleBtn.onclick = function(){ // 单击“处理图片”按钮，处理图片
+
+        var svgDOM = document.getElementById("drawRectangleList");
+        var rects = svgDOM.getElementsByTagName("rect");
+        var rectangleArray = new Array();
+
+        var blackRectJudge = 0;
+        for(j = 0; j < rects.length; j++) {
+            var temp = new Array();
+            temp[4]=rects[j].getAttribute("stroke") ;
+            if(temp[4]=='black'){
+                blackRectJudge = 1;
+            }
+        }
+
+        if(blackRectJudge == 0){
+
+
+            for(j = 0; j < rects.length; j++) {
+                var temp = new Array();
+
+                temp[0]=parseInt(rects[j].getAttribute("x"));
+                temp[1]=parseInt(rects[j].getAttribute("y"));
+                temp[2]=parseInt(rects[j].getAttribute("width")) + temp[0];
+                temp[3]=parseInt(rects[j].getAttribute("height")) + temp[1];
+                temp[4]=rects[j].getAttribute("stroke") ;
+                if(temp[4]=='red'){
+                    temp[4]='member';
+                    var obj = new RectData(temp[0],temp[1],temp[2],temp[3],temp[4]);
+                    rectangleArray[j]=obj;
+                }
+                if(temp[4]=='yellow'){
+                    temp[4]='Algorithm';
+                    var obj = new RectData(temp[0],temp[1],temp[2],temp[3],temp[4]);
+                    rectangleArray[j]=obj;
+                }
+
+
+            }
+
+
+            var picture_id = [[${picture.picture_id}]]; //取出当前页面picture_id
+            ss(rectangleArray,picture_id);              //调用ajax存储当前页面所有方框
+
+
+        }else{
+
+            alert("存在黑色方框，请在只有黄色与红色方框状态下存储");
+
+        }
+
+
+
+    }
+
+
+
+</script>
+
+<script type="text/javascript">
+    //想获取鼠标在浏览器中的当前坐标，并要求鼠标静止时也能通过此事件获取到坐标，于是打算通过处理mousemove事件实现，但通过测试，发现在IE、Chrome下鼠标静止时能触发mousemove，而firefox在鼠标静止时却不会触发mousemove。
+    var m  = new Array();
+    m[0] = 0;
+    m[1] = 0;
+
+    /**
+     * 通过按钮控制是否使用svg标签内的mousedown函数，controlOverDraw关闭，
+     * controlStartDraw激活
+     */
+    function controlOverDraw() {
+
+        document.getElementById('OverDraw').style.display='none';
+        document.getElementById('StartDraw').style.display='';
+        var svg = d3.select("svg")                   //  参考内容https://gist.github.com/romsson/568e166d702b4a464347
+            .on("mousedown", null);
+
+        window.location.reload();
+    }
+
+    function controlStartDraw() {
+        document.getElementById('StartDraw').style.display='none';
+        document.getElementById('OverDraw').style.display='';
+
+        var svg = d3.select("svg")                   //  参考内容https://gist.github.com/romsson/568e166d702b4a464347
+            .on("mousedown", mousedown)
+
+        //  .on("mouseup", mouseup);
+
+
+        function mousedown() {
+
+            var m = d3.mouse(this);
+            //alert("fuyuansu");
+            rect = svg.append("rect")
+                .attr("x", m[0])
+                .attr("y", m[1])
+                // .attr("id", m[0]+"a"+m[1]+"b")
+                .attr("fill", "none")
+                .attr("stroke", "red")
+                .attr("stroke-width", 1)
+                .attr("height", 0)
+                .attr("width", 0)
+            //         // .attr("cursor","move")
+            ;
+
+            //
+            svg.on("mousemove", mousemove);
+
+            window.event.cancelBubble = true;
+
+            return false;
+        }
+
+        /**
+         * 鼠标移动时方框根据移动位置画框，初始位置为mousedown点击处
+         * @param d
+         * @returns {boolean}
+         */
+        function mousemove(d) {
+            var m = d3.mouse(this);
+
+            rect.attr("width", Math.max(0, m[0] - +rect.attr("x")))
+                .attr("height", Math.max(0, m[1] - +rect.attr("y")))
+
+
+            retanglewidth = Math.max(0, m[0] - +rect.attr("x"));
+            retangleheight = Math.max(0, m[1] - +rect.attr("y"));
+
+            svg.on("mouseup", mouseup);
+
+            return false;
+        }
+
+        /**
+         * 鼠标抬起后结束画框，并赋予方框鼠标点击事件
+         * @returns {boolean}
+         */
+        function mouseup() {
+            if (rect.attr("height") * rect.attr("height") < 30) {
+                rect.remove();
+            }
+
+            var m = d3.mouse(this);
+
+            rect.attr("id", m[0] + "a" + m[1] + "b")
+                .on("dblclick", function () {
+                    //alert(m[0] + "a" + m[1] + "b");
+
+                    document.getElementById(m[0] + "a" + m[1] + "b").setAttribute("stroke", "black");
+                    var message = confirm("是否要删除此框：x=" + m[0] + ",y=" + m[1] + "?");
+                    // d3.select('#'+m[0]+"a"+m[1]+"b").remove();
+                    if (message == true) {
+                        $('#' + m[0] + "a" + m[1] + "b").remove();
+
+                    }
+                    document.getElementById(m[0] + "a" + m[1] + "b").setAttribute("stroke", "red");
+
+                    return false;
+                })
+                .on("click", function () {
+                    // alert("111111111");
+
+
+                    document.getElementById(m[0] + "a" + m[1] + "b").setAttribute("stroke", "black");
+                    saveUpdateRectId = m[0] + "a" + m[1] + "b";
+
+                    if (saveRectIdArray.length == 1) {
+                        tempid = saveRectIdArray.pop();
+                        document.getElementById(tempid).setAttribute("stroke", "red");
+                    }
+                    if (saveAIRectIdArray.length == 1) {
+                        tempid = saveAIRectIdArray.pop();
+                        document.getElementById(tempid).setAttribute("stroke", "yellow");
+                    }
+
+                    saveRectIdArray.push(saveUpdateRectId);
+
+
+                    $('#rect_id').val("");
+                    $('#x1').val("");
+                    $('#x2').val("");
+                    $('#y1').val("");
+                    $('#y2').val("");
+                    $('#retangle_author').val("");
+                    damagetype_id[0].selected = true;//选中
+
+                    return false;
+                });
+
+
+            svg.on("mousemove", null);
+
+            return false;
+        }
+
+    }
+</script>
+</html>

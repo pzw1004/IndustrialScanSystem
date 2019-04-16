@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:overflow="http://www.w3.org/1999/xhtml" xmlns: xmlns: xmlns:color="http://www.w3.org/1999/xhtml"
+      xmlns:font-size="http://www.w3.org/1999/xhtml" xmlns:if="http://www.w3.org/1999/xhtml">
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="css/domain.css" type="text/css"><link/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+
+    <title>X光影像管理系统</title>
+    </div>
+    <script type="text/javascript">
+
+        function turnon(id){    //根据传入的id号来控制申请单内信息的显示以及对应按钮的显示
+
+            var checkbody = "checkbody" +id;
+            var turnonid = "turnon" + id;
+            var turnoffid = "turnoff" + id;
+            var tempobj1 = document.getElementById(turnonid);
+            tempobj1.setAttribute('style', 'cursor:pointer;display:none');
+            var tempobj2 = document.getElementById(turnoffid);
+            tempobj2.setAttribute('style', 'cursor:pointer;');
+
+            if(document.getElementById(checkbody).style.display=='none'){
+               // alert("show");
+            document.getElementById(checkbody).style.display=''
+            }
+        }
+
+        function turnoff(id){
+            var checkbody = "checkbody" +id;
+
+            var turnonid = "turnon" + id;
+            var turnoffid = "turnoff" + id;
+            var tempobj1 = document.getElementById(turnonid);
+            tempobj1.setAttribute('style', 'cursor:pointer;');
+            var tempobj2 = document.getElementById(turnoffid);
+            tempobj2.setAttribute('style', 'display:none');
+
+            document.getElementById(checkbody).style.display='none'
+        }
+
+    </script>
+</head>
+<ifframeset >
+    <ifframe th:include="common/top::html" id="frameTop" name="frameTop"/>
+    <ifframe th:include="common/left::html"  id="frameContentLeft" name="frameContentLeft" />
+
+</ifframeset>
+<body >
+<section id="frameContentRight">
+<div style="text-align: center;">
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <!--  <li><a href="#">数据表</a></li> -->
+            <li><a href="#">无损检测申请单列表</a></li>
+        </ul>
+    </div>
+
+    <div class="rightinfo">
+
+        <div class="tools">
+            <ul class="toolbar">
+                <div id="div_brightness" style="display:inline-block;">
+                <input id="inputNumber" type="text" value="" size="20" style="font-size:20px;"  placeholder="请输入申请单编号"/><input id="clickSearch" type="button" style="font-size:20px;" value="搜索"/>
+                </div>
+                <!--<li class="click"><span><img src="images/t01.png" /></span>添加</li>-->
+                <!--<li class="click"><span><img src="images/t02.png" /></span>修改</li>-->
+                <!--<li><span><img src="images/t03.png" /></span>删除</li>-->
+                <!--  <li><span><img src="images/t04.png" /></span>统计</li> -->
+            </ul>
+            <!--<ul class="toolbar1">-->
+                <!--<li><span><img src="images/t05.png" /></span>设置</li>-->
+            <!--</ul>-->
+        </div>
+
+<script type="text/javascript">
+
+    var clickSearch = document.getElementById("clickSearch");
+
+    clickSearch.onclick = function () {
+        var requisition_number=document.getElementById('inputNumber').value;
+        window.location.href="requisition?requisition_number="+requisition_number;
+    }
+
+</script>
+
+        <table class="tablelist">
+            <thead>
+            <tr>
+                <th style="text-align:center;">工程编号<i class="sort"><img src="images/px.gif" /></i></th>
+                <th style="text-align:center;">工程名称</th>
+                <th style="text-align:center;">结构名称</th>
+                <th style="text-align:center;">施工单位</th>
+                <th style="text-align:center;">焊缝数量</th>
+                <th style="text-align:center;">钢号</th>
+                <th style="text-align:center;">是否经过一级审查</th>
+                <th style="text-align:center;">一级审查签名</th>
+                <th style="text-align:center;">是否经过二级审查</th>
+                <th style="text-align:center;">二级审查签名</th>
+                <th style="text-align:center;">是否经过三级审查</th>
+                <th style="text-align:center;">三级审查签名</th>
+                <!--<th style="text-align:center;">申请单状态</th>-->
+                <th style="text-align:center;">操作</th>
+            </tr>
+            </thead>
+
+            <section th:each="requisition : ${requisitionList}">
+            <tr>
+                <td th:text="${requisition.getRequisition_number()}"></td>
+                <td th:text="${requisition.getRequisition_name()}"></td>
+                <td th:text="${requisition.getRequisition_structurename()}"></td>
+                <td th:text="${requisition.getRequisition_constructunit()}"></td>
+                <td >--</td>
+                <td th:text="${requisition.getRequisition_steelnumber()}"></td>
+                <!--<td sec:authorize="hasRole('ROLE_first')" th:text="${requisition.getRequisition_firstexam()}"></td>-->
+                <td th:text="${requisition.getRequisition_firstexam()}">&nbsp;</td>
+                <section th:each="member : ${memberList}">
+                <td th:if="${member.getMember_id()==requisition.getRequisition_firstexam_member()}" th:text="${member.getMember_name()}">&nbsp;</td>
+                </section>
+                <td th:if="${requisition.getRequisition_firstexam_member()==0}">&nbsp;</td>
+                <td th:text="${requisition.getRequisition_secondexam()}">&nbsp;</td>
+                <section th:each="member : ${memberList}">
+                <td th:if="${member.getMember_id()==requisition.getRequisition_secondexam_member()}" th:text="${member.getMember_name()}">&nbsp;</td>
+                </section>
+                <td th:if="${requisition.getRequisition_secondexam_member()==0}">&nbsp;</td>
+                <td th:text="${requisition.getRequisition_thirdexam()}">&nbsp;</td>
+                <section th:each="member : ${memberList}">
+                <td th:if="${member.getMember_id()==requisition.getRequisition_thirdexam_member()}" th:text="${member.getMember_name()}">&nbsp;</td>
+                </section>
+                <td th:if="${requisition.getRequisition_thirdexam_member()==0}">&nbsp;</td>
+                <!--<td th:text="${requisition.getRequisition_state()}" th:if="${(requisition.getRequisition_state()!=null)&&(requisition.getRequisition_state().length()!=0)}" style="background-color:red"></td>-->
+                <!--<td th:text="${requisition.getRequisition_state()}" th:if="${(requisition.getRequisition_state()==null)||(requisition.getRequisition_state().isEmpty())}"></td>-->
+                <!--<td th:if="${(memberRole.getMember_role()==2&&requisition.getRequisition_secondexam()=='审批完成')||(memberRole.getMember_role()==3&&requisition.getRequisition_thirdexam()=='审批完成')||(memberRole.getMember_role()==3&&requisition.getRequisition_firstexam()=='未审批')||(memberRole.getMember_role()==4&&requisition.getRequisition_secondexam()=='未审批')}">-->
+                    <!--<input type="button" id="turnon" value="查看申请单信息" th:onclick="|javascript:turnon(${requisition.getRequisition_id()})|" /> &nbsp;&nbsp;&nbsp;<input type="button" id="turnoff" value="关闭申请单信息" th:onclick="|javascript:turnoff(${requisition.getRequisition_id()})|"/>&nbsp;&nbsp;&nbsp;<a th:href="@{/requisitionUpdate( id = ${requisition.getRequisition_id()})}">编辑申请单</a>&nbsp;&nbsp;&nbsp;<a href="/requisitionReport">检测报告</a>-->
+                <!--</td>-->
+                <!--<section th:each="authority : ${authorityList}">-->
+                <td th:if="${memberRole.getMember_role()==1 ||(memberRole.getMember_role() == requisition.getRequisition_state())}">
+                    <input style="cursor:pointer" type="button" th:id="'turnon'+${requisition.getRequisition_id()}" value="查看申请单信息" th:onclick="|javascript:turnon(${requisition.getRequisition_id()})|" /> &nbsp;&nbsp;&nbsp;<input style="cursor:pointer;display:none" type="button" th:id="'turnoff'+${requisition.getRequisition_id()}" value="关闭申请单信息" th:onclick="|javascript:turnoff(${requisition.getRequisition_id()})|"/>&nbsp;&nbsp;&nbsp;<a th:href="@{/requisitionUpdate( id = ${requisition.getRequisition_id()})}">审核申请单</a>&nbsp;&nbsp;&nbsp;
+                </td>
+                <td th:if="${(!(memberRole.getMember_role()==1 ||(memberRole.getMember_role() == requisition.getRequisition_state())))&&requisition.getRequisition_state()==2}">
+                    <input style="color: #d70101"  type="button"  value="等待一级审核员审批" /> &nbsp;&nbsp;&nbsp;<input style="color: #d70101" type="button" id="" value="等待一级审核员审批"/>&nbsp;&nbsp;&nbsp;<a style="color: #d70101">等待一级审核员审批</a>&nbsp;&nbsp;&nbsp;
+                </td>
+                <td th:if="${(!(memberRole.getMember_role()==1 ||(memberRole.getMember_role() == requisition.getRequisition_state())))&&requisition.getRequisition_state()==3}">
+                    <input style="color: #d70101"  type="button"  value="等待二级审核员审批" /> &nbsp;&nbsp;&nbsp;<input style="color: #d70101" type="button" id="" value="等待二级审核员审批"/>&nbsp;&nbsp;&nbsp;<a style="color: #d70101">等待二级审核员审批</a>&nbsp;&nbsp;&nbsp;
+                </td>
+                <td th:if="${(!(memberRole.getMember_role()==1 ||(memberRole.getMember_role() == requisition.getRequisition_state())))&&requisition.getRequisition_state()==4}">
+                    <input style="color: #d70101"  type="button"  value="等待三级审核员审批" /> &nbsp;&nbsp;&nbsp;<input style="color: #d70101" type="button" id="" value="等待三级审核员审批"/>&nbsp;&nbsp;&nbsp;<a style="color: #d70101">等待三级审核员审批</a>&nbsp;&nbsp;&nbsp;
+                </td>
+
+            </tr>
+                <!--th:if="${#authentication.principal==}"-->
+            <tbody th:id="checkbody+${requisition.getRequisition_id()}" style="display: none;";>
+                <ul>
+            <tr>
+                <th colspan="15">焊接方法  埋弧焊</th>
+            </tr>
+            <tr>
+                <td colspan="2">焊缝编号</td>
+                <td colspan="1">厚度</td>
+                <td colspan="2">焊接方法</td>
+                <td colspan="2">检测标准</td>
+                <td colspan="2">合格级别</td>
+                <td colspan="2">备注</td>
+                <td colspan="1">是否完成审批</td>
+                <td colspan="2">操作</td>
+            </tr>
+
+                    <section th:each="picture : ${pictureList}">
+                    <tr th:if="${picture.getPicture_requisition_id() == requisition.getRequisition_id()}">
+                        <td colspan="2" th:text="${picture.getPicture_number()}"></td>
+                        <td colspan="1" th:text="${picture.getPicture_thickness()}"></td>
+                        <td colspan="2" th:text="${picture.getPicture_testmethod()}">对接</td>
+                        <td colspan="2" th:text="${picture.getPicture_teststandard()}">RT</td>
+                        <td colspan="2" th:text="${picture.picture_qualifylevel}"></td>
+                        <td colspan="2" th:text="${picture.getPicture_ps()}"> </td>
+                        <td colspan="1" sec:authorize="hasRole('ROLE_admin')" th:text="${picture.getPicture_firstexamresult()}+ ${picture.getPicture_secondexamresult()}+ ${picture.getPicture_thirdexamresult()}"> </td>
+                        <td colspan="1" sec:authorize="hasRole('ROLE_fisrtexam')" th:text="${picture.getPicture_firstexamresult()}"> </td>
+                        <td colspan="1" sec:authorize="hasRole('ROLE_secondexam')" th:text="${picture.getPicture_secondexamresult()}"> </td>
+                        <td colspan="1" sec:authorize="hasRole('ROLE_thirdexam')" th:text="${picture.getPicture_thirdexamresult()}"> </td>
+                        <td colspan="2"><a th:href="@{/requisitionImgtableShow( id = ${picture.getPicture_id()})}">查看详细信息</a></td>
+                    </tr>
+                    </section>
+
+                </ul>
+            </tbody>
+            </section>
+
+        </table>
+        <br/><br/>
+
+        <div class="pagin">
+            <div class="message" style="font-size:17px;" >共&nbsp;&nbsp;<i class="blue" style="font-size:20px;" th:text="${pageTotalNum}">10</i>&nbsp;&nbsp;页记录,共&nbsp;&nbsp;<i class="blue" style="font-size:20px;" th:text="${totalNum}">10</i>&nbsp;&nbsp;条记录，当前显示第&nbsp;<i class="blue" style="font-size:20px;" th:text="${pageNum}">2&nbsp;</i>页
+            </div><br/>
+            <div class="message" style="cursor:pointer;">
+                <a style="font-size:20px;" th:href="@{/requisition(key=${key},pageNum = 1)}">首页&nbsp;&nbsp;</a>
+                <a style="font-size:20px;" th:href="@{/requisition(key=${key},pageNum = ${pageNum} - 1)}">上一页&nbsp;&nbsp;</a>
+                <a style="font-size:20px;" th:href="@{/requisition(key=${key},pageNum = ${pageNum} + 1)}">下一页&nbsp;&nbsp;</a>
+                <a style="font-size:20px;" th:href="@{/requisition(key=${key},pageNum = ${pageTotalNum})}">尾页&nbsp;&nbsp;</a>
+            </div>
+        </div>
+
+
+        <div class="tip">
+            <div class="tiptop"><span>提示信息</span><a></a></div>
+
+            <div class="tipinfo">
+                <span><img src="images/ticon.png" /></span>
+                <div class="tipright">
+                    <p>是否确认对信息的修改 ？</p>
+                    <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+                </div>
+            </div>
+
+            <div class="tipbtn">
+                <input name="" type="button"  class="sure" value="确定" />&nbsp;
+                <input name="" type="button"  class="cancel" value="取消" />
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+    <script type="text/javascript">
+        $('.tablelist tbody tr:odd').addClass('odd');
+    </script>
+</div>
+</section>
+</body>
+</html>

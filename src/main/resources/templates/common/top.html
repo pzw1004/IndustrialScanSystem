@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>X光影像管理系统</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<!--<script language="JavaScript" src="js/jquery.js"></script>-->
+<script type="text/javascript">
+$(function(){	
+	//顶部导航切换
+	$(".nav li a").click(function(){
+		$(".nav li a.selected").removeClass("selected")
+		$(this).addClass("selected");
+	})	
+})	
+</script>
+
+
+</head>
+
+<body style="background:url(images/topbg.gif) repeat-x;">
+
+    <div class="topleft">
+    <a href="../main.html" target="_parent"><img src="images/logo.png" title="系统首页" /></a>
+    </div>
+        
+    <ul class="nav">
+    
+   <!-- <li><a href="imgtable.html" target="rightFrame"><img src="images/icon02.png" title="模型管理" /><h2>模型管理</h2></a></li>
+    <li><a href="imglist.html"  target="rightFrame"><img src="images/icon03.png" title="模块设计" /><h2>模块设计</h2></a></li>
+    <li><a href="tools.html"  target="rightFrame"class="selected"><img src="images/icon04.png" title="常用工具" /><h2>常用工具</h2></a></li>   -->
+    <li><a href="#" ><img src="images/icon05.png" title="X光影像管理" /><h2>工作目录管理</h2></a></li>
+	<li><a href="#" ><img src="images/icon01.png" title="人员管理" /><h2>人员管理</h2></a></li>
+	 <li><a href="#" ><img src="images/icon04.png" title="打印诊断报告" /><h2>打印诊断报告</h2></a></li>
+    <li><a href="#"  ><img src="images/icon06.png" title="系统设置" /><h2>系统设置</h2></a></li>
+    </ul>
+            
+    <div class="topright">
+
+    <ul>
+    <li><span><img src="images/help.png" title="帮助" class="helpimg"/></span><a href="#">帮助</a></li>
+    <li><a href="#">关于</a></li>
+    <li><a href="../login.html" target="_parent">退出</a></li>
+    </ul>
+     
+    <div class="user">
+        <div sec:authorize="isAuthenticated()">
+        <span id="connect_state"></span>
+        <span th:text="'用户名为：'+${#authentication.getName()}+'登录'"></span>
+        </div>
+    </div>    
+    
+    </div>
+
+<script th:inline = "javascript" >
+
+    /**
+     * 定义连接状态，向AI检测服务器端初始发送一次请求，并设定每隔5分钟发送一次请求，根据返回状态写到前端
+     *
+     */
+    var connectState = 0;
+    var connectStateValue ="";
+
+    /**
+     *
+     * 这里采用jQuery自动调用函数的方法，不要采取windows.onload方法，windows.onload只能单个页面使用一次。
+     *
+     */
+    $(function(){
+
+        connectInternalTest();//假设这里每五分钟执行一次connectInternalTest函数
+
+    });
+
+    function connectInternalTest() {
+
+
+        $.ajax({
+            type: "POST",
+            url: '/getConnectionState',
+            data: {
+            },
+            dataType: 'text',
+            success:function(data){
+
+                    console.log(data);
+                    connectState = 1;
+                    connecrSetSpanValue();
+
+            },
+            error:function(){
+
+                    connecrSetSpanValue();
+
+            }
+        });
+        //alert("111");
+        //setTimeout(connectInternalTest, 1000 * 60 * 5); //这里的1000表示1秒有1000毫秒,1分钟有60秒,5表示总共5分钟
+        setTimeout(connectInternalTest, 1000 * 30); //这里的1000表示1秒有1000毫秒,1分钟有60秒这里使用30秒
+
+    }
+
+    /**
+     * 设置显示的value值
+     */
+    function connecrSetSpanValue() {
+
+
+    if(connectState==0){
+
+         connectStateValue = "当前与AI检测服务器连接状态：未连接&nbsp;&nbsp;|&nbsp;&nbsp;";
+
+    }
+    if(connectState==1){
+
+         connectStateValue = "当前与AI检测服务器连接状态：正常连接中&nbsp;&nbsp;|&nbsp;&nbsp;";
+
+    }
+
+    $("#connect_state").html(connectStateValue);
+
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>X光影像管理系统</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> <!--  用来支持采用的ajax语法必须包含的js文件  -->
+<link href="../bootstrap/v3/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="js/html_js/imgtable_show.js"></script>
+<script type="text/javascript" src="js/html_js/image_processing.js"></script>
+
+
+
+
+
+
+<style>
+        table,table tr th, table tr td { border:1px solid #000000; font-size:22px;}
+        table { width: 200px; min-height: 25px; line-height: 25px; text-align: center; border-collapse: collapse;}   
+    </style>
+</head>
+
+
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    </ul>
+    </div>
+
+    <div class="mainindex">
+        <input type="button" value="开始搜索" style='font-size:20px' class="bb"><input type="text" class="aa"
+                                                                                   style="border:1px solid gray;height:20px;width:200px"
+                                                                                   placeholder="请在此输入影像图相关信息">
+        <center id>
+            <input style="text-align: center;">
+            <p style="font-size:25px">X光影像图信息管理</p></br>
+            <canvas id="canvas" width="1400" height="400"></canvas>
+            <script type="text/javascript">
+                var canvas = document.getElementById("canvas");
+                var ctx = canvas.getContext("2d");
+                //绘制
+                ctx.fillStyle = "#ffffff";
+                ctx.strokeStyle = "#000000";
+                ctx.lineWidth = 1;
+                ctx.rect(20, 20, 1300, 350);
+                ctx.fill();//填充
+                ctx.stroke();//绘制边框
+            </script>
+
+
+            </br></br></br></br></br></br>
+
+            <input type="range" min="-30" max="30" value="70" id="brightness" size="500" height="100pixels" name="亮度调节">亮度调节</input>
+            <div id="div_brightness"></div>
+            <input type="range" min="-30" max="30" value="70" id="contrast">对比度调节</input>
+            <div id="div_contrast"></div>
+            <br><br>
+            <button type="button" class="btn btn-info" id="fanse">图片反色</button>
+            <!--<button type="button" class="btn btn-info" id="">图片亮度增加</button>
+            <button type="button" class="btn btn-info" id="darkness">图片亮度减少</button>
+            <button type="button" class="btn btn-info" id="contrast_up">对比度增加</button>-->
+            <button type="button" class="btn btn-info" id="imageVRevert">竖向翻转</button>
+            <br><br>
+            <button type="button" class="btn btn-info" id="imageHRevert">横向翻转</button>
+            <button type="button" class="btn btn-info" id="returnStep">撤销</button>
+            <button type="button" class="btn btn-info" id="ForwardStep">前进</button>
+
+        </center>
+    </div>
+        <br><br><br>
+        <center>
+        <table border="2" >
+
+            <tr>
+                <td colspan="8">X光影像图信息概况</td>
+            </tr>
+            <tr>
+                <td colspan="1">影像图名称</td> <td colspan="2"></td><td colspan="3">影像图编号</td><td colspan="1">零件分类</td> <td colspan="1">破损信息</td>
+            </tr>
+            <tr>
+                <td colspan="3">影像图其他信息</td><td colspan="1">合计</td><td colspan="1">X</td><td colspan="1">X</td><td rowspan="2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td><td rowspan="2">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+            </tr>
+            <tr>
+                <td colspan="1">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td><td colspan="1">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td><td colspan="1">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td><td colspan="1">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td><td colspan="1">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td><td colspan="1">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+            </tr>
+        </table>
+        </center>
+
+
+    
+	
+    
+    
+    </div>
+	
+	
+	
+	
+	
+	<br>
+</body>
+
+</html>

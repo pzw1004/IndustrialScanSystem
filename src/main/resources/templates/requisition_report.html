@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:overflow="http://www.w3.org/1999/xhtml" xmlns: xmlns:>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>检 测 报 告</title>
+    <style>
+        /*divcss5{ width:400px}*/
+        /*divcss5 table{background: #FFFFFF}    !* 此处设置table为黑色 000 *!*/
+        /*divcss5 table td{background: #FFFFFF}  !* 此处设置td为白色，综合table色彩边框即为黑色 *!*/
+
+        /*div3{border-top:1px solid #000}*/
+
+
+    </style>
+
+
+</head>
+<body>
+<center>
+    <div class="div3">
+        <div class="divcss5">
+            <table border=1 title="测试" cellspacing="0" width="800" height="300"> <!-- cellspacing 是td间距设置-->
+                <caption><font size="8">武 昌 船 舶 重 工 有 限 责 任 公 司<br/>
+                    无 损 检 测 报 告<br/>
+
+                </font>无损检测室：</caption><br/>
+
+
+                <tr>
+                    <td colspan="2" th:text="'来样编号：'+${requisition.getRequisition_samplenumber()}">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'报告编号：'+${requisition.getRequisition_reportnumber()}">报告编号:</td>
+                    <td colspan="2" th:text="'日期：'+${requisition.getRequisition_entrytime()}">日期:</td>
+                </tr>
+                <tr>
+                    <td colspan="2" th:text="'工程编号：'+${requisition.getRequisition_number()}">工程编号：&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/></td>
+                    <td colspan="2" th:text="'工程名称：'+${requisition.getRequisition_name()}">工程名称:<br/><br/></td>
+                    <td colspan="2" th:text="'结构名称：'+${requisition.getRequisition_structurename()}">结构名称:<br/><br/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" th:text="'施工单位：'+${requisition.getRequisition_constructunit()}">施工单位：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'仪器型号：'+${requisition.getRequisition_instrumenttype()}">仪器型号：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'胶片型号：'+${requisition.getRequisition_filmtype()}">胶片型号：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2" th:text="'检测标准：'+${requisition.getRequisition_testingstandard()}">检测标准：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'合格级别：'+${requisition.getRequisition_qualificationlevel()}">合格级别：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'增 感 屏：'+${requisition.getRequisition_intensifyscreen()}">增 感 屏：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2" th:text="'管 电 压：'+${requisition.getRequisition_tubevoltage()}">管 电 压：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'管 电 流：'+${requisition.getRequisition_tubecurrent()}">管 电 流：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'曝光时间：'+${requisition.getRequisition_exposuretime()}">曝光时间：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2" th:text="'灵 敏 度：'+${requisition.getRequisition_sensitivity()}">灵 敏 度：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'底片黑度：'+${requisition.getRequisition_density()}">底片黑度：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'焦 距：'+${requisition.getRequisition_focus()}">焦 距：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2" th:text="'显影时间：'+${requisition.getRequisition_developmenttime()}">显影时间：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'显影温度：'+${requisition.getRequisition_developertemperature()}">显影温度：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'钢    号：'+${requisition.getRequisition_steelnumber()}">钢    号：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2" th:text="'接头形式：'+${requisition.getRequisition_jointform()}">：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'焊接方法：'+${requisition.getRequisition_weldingmethod()}">：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" th:text="'数    量：'+${requisition.getRequisition_totalnumber()}">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">焊缝编号：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1">厚度mm：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2">缺陷定位、定量、定性：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1">级别：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr th:each="picture : ${pictureList}">
+                    <td colspan="2" th:text="${picture.getPicture_number()}">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="1" th:text="${picture.getPicture_thickness()}">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="2" style="align-items: center;">&nbsp;</td>
+                    <td colspan="1" th:text="${picture.getPicture_level()}">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+
+
+
+
+
+                <tr>
+                    <td colspan="2" th:text="'返修次数：'+${requisition.getRequisition_reworktimes()}">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="4">A：圆形缺陷 B:条形缺陷 C:未焊透 D:未熔合 E:裂纹</td>
+                </tr>
+                <tr>
+                    <td colspan="3">评片员：&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td colspan="3">审核员：</td>
+                </tr>
+
+
+
+
+            </table>
+        </div>
+    </div>
+</center>
+</body>
+</html>

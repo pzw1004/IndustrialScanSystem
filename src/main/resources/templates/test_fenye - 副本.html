@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>无标题文档</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="js/html_js/imgtable.js"></script>
+   
+ 
+ </head>
+    <body>
+    <div class="rightinfo">
+        <div>
+            <input type="text" id="key" />
+            <input type="button" value="查询" id="chaxun" />
+        </div>
+    <table class ="imgtable">
+
+        <thead>
+        <tr>
+            <!--   <th><input name="" type="checkbox" value="" checked="checked"/></th> -->
+            <th width="400px;">缩略图</th>
+            <th>影像图描述</th>
+            <th>编号</th>
+            <th>所属工作目录</th>
+            <th>录入人员</th>
+            <th>工件类型</th>
+            <th>是否已进行AI诊断</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+
+
+    <tbody id="nr">
+ 
+      </tbody>
+
+
+
+ <script type="text/javascript">
+ var page = 1; //当前页
+ 
+Load(); //加载数据
+LoadXinXi(); //加载分页信息
+ 
+//查询
+$("#chaxun").click(function() {
+    page = 1;
+    Load(); //加载数据
+    LoadXinXi(); //加载分页信息
+})
+ 
+function Load() {
+    var key = $("#key").val(); //查询条件
+ 
+    $.ajax({
+        url: "http://127.0.0.1:8080/test_index",
+        data: {
+            page: page,
+            key: key
+        },
+        type: "POST",
+        dataType: "JSON",
+        success: function(data) {
+            var str = "";
+            for(var k in data) {
+                //str += "&lt;tr>&lt;td>" + data[k].picture_number + "&lt;/td>&lt;td>" + data[k].picture_type + "&lt;/td>&lt;td>" + data[k].picture_ps + "&lt;/td>&lt;/tr>";
+
+
+                str += "<tr><tr><td><input name='' type='checkbox' value=''  width='30%'/></td><td class='imgtd'><a href='imgtable_show.html'><img src="+data[k].picture_dir+ "></a></td><td><a href='imgtable_show.html'>"+data[k].picture_ps+"</a><p>录入时间："+data[k].picture_entrytime+"</p></td><td>"+data[k].picture_number+"<p>ID: 82122</p></td><td>"+data[k].picture_workspace+"</td><td>"+data[k].picture_datastaff+"</td><td>"+data[k].picture_type+"</td><td>"+data[k].picture_AIresult+"</td><td><a href='#' class='tablelink'>查看</a>     <a href='#' class='tablelink'> 删除</a></td></tr>";
+
+            }
+            $("#nr").html(str);
+        }
+    });
+}
+ 
+function LoadXinXi() {
+    var str = "";
+    var minys = 1;
+    var maxys = 1;
+    var key = $("#key").val();
+ 
+    //查总页数
+    $.ajax({
+        async: false,
+        url: "http://127.0.0.1:8080/zys",
+        data: {
+            key: key
+        },
+        type: "POST",
+        dataType: "TEXT",
+        success: function(d) {
+            maxys = d;
+        }
+    });
+ 
+    str += "<span>总共：" + maxys + "页</span>  ";
+    str += "<span id='prev'>上一页</span>";
+ 
+    for(var i = page - 2; i < page + 3; i++) {
+        if(i >= minys && i <= maxys) {
+            if(i == page) {
+                str += "<span class='dangqian' bs='" + i + "'>" + i + "</span>  ";
+            } else {
+                str += "<span class='list' bs='" + i + "'>" + i + "</span>  ";
+            }
+ 
+        }
+    }
+ 
+    str += "<span id='next'>下一页</span>";
+ 
+    $("#xinxi").html(str);
+ 
+    //给上一页添加点击事件
+    $("#prev").click(function() {
+            page = page - 1;
+            if(page < 1) {
+                page = 1;
+            }
+            Load(); //加载数据
+            LoadXinXi(); //加载分页信息
+        })
+        //给下一页加点击事件
+    $("#next").click(function() {
+            page = page + 1;
+            if(page > maxys) {
+                page = maxys;
+            }
+            Load(); //加载数据
+            LoadXinXi(); //加载分页信息
+        })
+        //给中间的列表加事件
+    $(".list").click(function() {
+        page = parseInt($(this).attr("bs"));
+        Load(); //加载数据
+        LoadXinXi(); //加载分页信息
+    })
+}
+
+
+
+
+
+
+ 
+
+</script>
+
+
+    </table>
+</div>
+        <div id="xinxi">
+ 
+        </div>
+ 
+    </body>
+
+</html>

@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>X光影像管理系统</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!--<script language="JavaScript" src="js/jquery.js"></script>-->
+    <!--<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> &lt;!&ndash;  用来支持采用的ajax语法必须包含的js文件  &ndash;&gt;-->
+
+    <script type="text/javascript">
+        $(function(){
+            //导航切换
+            $(".menuson li").click(function(){
+                $(".menuson li.active").removeClass("active")
+                $(this).addClass("active");
+            });
+
+            $('.title').click(function(){
+                var $ul = $(this).next('ul');
+                $('dt').find('ul').slideUp();
+                if($ul.is(':visible')){
+                    $(this).next('ul').slideUp();
+                }else{
+                    $(this).next('ul').slideDown();
+                }
+            });
+        })
+
+
+
+
+
+
+
+    </script>
+
+
+</head>
+
+<body style="background:#f0f9fd;">
+<div class="lefttop"><span></span>通讯录</div>
+
+<section class="leftmenu" >
+
+    <!--<dt>-->
+        <!--<div class="title" style="background:#F0FFFF; color:#000000 ;font-size:20px">-->
+            <!--<a><img src="images/leftico01.png" /></a>X光影像管理信息-->
+        <!--</div>-->
+        <!--<ol class="menuson">-->
+            <!--&lt;!&ndash;  <li class="active"><cite></cite><a href="right.html" target="rightFrame">数据列表</a><i></i></li>-->
+              <!--<li><cite></cite><a href="imgtable.html" target="rightFrame">X影像数据表</a><i></i></li> &ndash;&gt;-->
+            <!--<li><cite></cite><a href="../imgtable.html" target="rightFrame">X光影像图列表</a><i></i></li>-->
+            <!--<li><cite></cite><a href="../imgtable_show.html" target="rightFrame">X光影像信息管理</a><i></i></li>-->
+            <!--<li><cite></cite><a href="../imgtable_report.html" target="rightFrame">查看已有诊断信息</a><i></i></li>-->
+            <!--<li><cite></cite><a href="../tools.html" target="rightFrame">打印诊断报告</a><i></i></li>-->
+        <!--</ol>-->
+    <!--</dt>-->
+
+
+
+
+
+    <!--  <dd><div class="title"><span><img src="images/leftico03.png" /></span>编辑器</div>
+      <ul class="menuson">
+          <li><cite></cite><a href="#">自定义</a><i></i></li>
+          <li><cite></cite><a href="#">常用资料</a><i></i></li>
+          <li><cite></cite><a href="#">信息列表</a><i></i></li>
+          <li><cite></cite><a href="#">其他</a><i></i></li>
+      </ul>
+      </dd>
+    -->
+
+    <dt><div class="title" style="background:#F0FFFF; color:#000000 ;font-size:20px"><a><img src="images/leftico04.png" /></a>X光影像信息管理</div>
+        <ul class="menuson">
+            <li sec:authorize="hasRole('ROLE_admin')"><cite></cite><a href="/memberList" >查看人员列表</a><i></i></li>
+            <!--<li><cite></cite><a href="/memberList" target="rightFrame">查看人员列表</a><i></i></li>-->
+            <!--<li><cite></cite><a href="#">常用资料</a><i></i></li>
+            <li><cite></cite><a href="#">信息列表</a><i></i></li> -->
+            <li><cite></cite><a href="/requisition" >查看申请单</a><i></i></li>
+        </ul>
+
+    </dt>
+
+    <dt>
+        <div class="title" style="background:#F0FFFF; color:#000000 ;font-size:20px">
+            <a><img src="images/leftico02.png" /></a>其他设置
+        </div>
+        <ul class="menuson">
+            <!--<li><cite></cite><a href="#">编辑内容</a><i></i></li>-->
+            <li><cite></cite><a href="/requisitionAdd">增加申请单</a><i></i></li>
+            <li><cite></cite><a href="/personalPage">个人信息显示</a><i></i></li>
+            <li sec:authorize="hasRole('ROLE_admin')"><cite></cite><a href="/logtest">查看日志信息</a><i></i></li>
+        </ul>
+    </dt>
+</section>
+</div>
+</body>
+</html>

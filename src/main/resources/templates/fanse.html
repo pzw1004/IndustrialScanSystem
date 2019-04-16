@@ -1,0 +1,29 @@
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+
+<canvas id="canvas" width="1400" height="400"></canvas>
+<script type="text/javascript">
+window.onload = function () {
+        var img = new Image();
+        img.src = "images/gy.jpg";
+        img.onload = function () {
+            var canvas = document.querySelector("#canvas");
+            var cxt = canvas.getContext("2d");
+            canvas.width = 1400;
+            canvas.height = 400;
+            cxt.drawImage(img, 0, 0, canvas.width, canvas.height);
+            var imageData = cxt.getImageData(0, 0, canvas.width, canvas.height);
+            var imageData_length = imageData.data.length / 4;
+            // 解析之后进行算法运算
+            for (var i = 0; i < imageData_length; i++) {
+                imageData.data[i * 4] = 255 - imageData.data[i * 4];
+                imageData.data[i * 4 + 1] = 255 - imageData.data[i * 4 + 1];
+                imageData.data[i * 4 + 2] = 255 - imageData.data[i * 4 + 2];
+            }
+            cxt.putImageData(imageData, 0, 0);
+
+        }
+    }
+</script>
+
+

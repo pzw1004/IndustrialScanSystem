@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/jquery.js"></script>
+
+    <script>
+        $.ajaxSetup({
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            }
+        });
+
+
+        var form = new FormData();
+        form.append("username","szy");
+        form.append("password",234);
+        var req = new XMLHttpRequest();
+        req.open("post", "http://localhost:8080/login", false);
+        req.send(form);
+        /*
+        username = 'szy';
+        password = '234';
+        $.ajax({
+            type: 'post',
+            url: 'http://localhost:8080/login',
+            dataType: 'json',
+            //dataType: 'jsonp',  //数据格式设置为jsonp
+            //jsonp: 'callback',  //Jquery生成验证参数的名称
+            data: {
+                username: username,
+                password: password
+            },
+            success:function(data){
+
+                //$('.imgtable').append(item);
+
+                //alert(username);
+                //alert(password);
+                alert('1');
+                alert(data);
+
+            },error:function(data){
+                alert("系统错误");
+                alert(XMLHttpRequest);
+                alert(textStatus);
+                alert(errorThrown);
+            }
+        });*/
+    </script>
+</head>
+<body>
+
+
+
+
+
+</body>
+</html>
