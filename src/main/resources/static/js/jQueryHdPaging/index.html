@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./paging.css">
+    <title>Paging</title>
+</head>
+
+<body>
+    <div class="box" id="box"></div>
+    <script src="./jquery-1.11.1.min.js"></script>
+    <script src="./paging.js"></script>
+    <script>
+        var setTotalCount = 301;
+        $('#box').paging({
+            initPageNo: 3, // 初始页码
+            totalPages: 30, //总页数
+            totalCount: '合计' + setTotalCount + '条数据', // 条目总数
+            slideSpeed: 600, // 缓动速度。单位毫秒
+            jump: true, //是否支持跳转
+            callback: function(page) { // 回调函数
+                console.log(page);
+            }
+        })
+    </script>
+</body>
+
+</html>

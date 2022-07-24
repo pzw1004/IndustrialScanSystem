@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jscs</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src = "http://127.0.0.1:8080/jquery-1.7.2.min.js"></script>
+    <Script>
+
+      /*  function changetext(id)
+        {
+            id.innerHTML="谢谢!";
+        }
+      */
+
+      function changetext()
+      {
+          //alert("111111111");
+          $.ajax({
+              type: "GET",
+              url:"http://127.0.0.1:8080/index",
+              dataType : "json",
+              //data: "1",
+              success: function(data){
+
+                   $.each(data, function(pictureIndex, picture){
+                    alert("Id"+picture['picture_id']);
+                    alert("编号"+picture['picture_number']);
+                    alert("类型"+picture['picture_type']);
+
+
+                  });
+              },
+              error:function(e){
+                  alert("ajax调用后端数据出错了")
+              }
+          });
+      }
+
+    </Script>
+    <meta charset="UTF-8">
+    <title>js传值</title>
+</head>
+<body>
+
+<h1 onclick="changetext()">显示测试</h1>
+
+
+</body>
+</html>
+</body>
+</html>

@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/scansystem?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+#  jackson:
+#    serialization:
+#      FAIL_ON_EMPTY_BEANS=false:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    content-type: text/html
+    cache: false
+  resources:
+    static-locations: classpath:/static/
+  http:
+    multipart:
+      #    设置单个文件传递大小
+      max-file-size: 50MB
+      #    设置单次传递所有文件夹之和的大小
+      max-request-size: 5000MB
+
+resources:
+logging:
+  level:
+    root: WARN
+    org:
+      springframework:
+        web: DEBUG
+      hibernate: ERROR
+  config: classpath:log4j2.yml
+server:
+  port: 8085
+  address: 0.0.0.0
+
+
+
+
+
+
