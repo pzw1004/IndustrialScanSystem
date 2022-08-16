@@ -12,8 +12,23 @@ public class Picture {
     @GeneratedValue
     private Integer picture_id;
     //id
+    private String picture_conclusion;
+    //结论
+    private  String picture_welding_operator;
+    //焊接人
+    private String picture_density;
+    //影像底片黑度
+    private String picture_quality;
+    //像质指数
+    private String picture_flaw_position;
+    //缺陷位置 手动输入
+    private String picture_flaw_type;
+    //缺陷类型 手动输入
+    private String picture_flaw_description;
+    //缺陷描述 手动输入
     private String picture_number;
     //影像图编号
+    private String picture_parts_Introductions;
     private String picture_dir;
     //影像图存储位置
     private String picture_ps;
@@ -42,6 +57,21 @@ public class Picture {
     private String picture_jointform;
 
 
+    public String getPicture_density() {
+        return picture_density;
+    }
+
+    public void setPicture_density(String picture_density) {
+        this.picture_density = picture_density;
+    }
+
+    public String getPicture_quality() {
+        return picture_quality;
+    }
+
+    public void setPicture_quality(String picture_quality) {
+        this.picture_quality = picture_quality;
+    }
 
     public Date getPicture_entrytime() {
         return picture_entrytime;
@@ -76,8 +106,29 @@ public class Picture {
         this.picture_jointform = picture_jointform;
     }
 
+    public String getPicture_flaw_position() {
+        return picture_flaw_position;
+    }
 
+    public void setPicture_flaw_position(String picture_flaw_position) {
+        this.picture_flaw_position = picture_flaw_position;
+    }
 
+    public String getPicture_flaw_type() {
+        return picture_flaw_type;
+    }
+
+    public void setPicture_flaw_type(String picture_flaw_type) {
+        this.picture_flaw_type = picture_flaw_type;
+    }
+
+    public String getPicture_flaw_description() {
+        return picture_flaw_description;
+    }
+
+    public void setPicture_flaw_description(String picture_flaw_description) {
+        this.picture_flaw_description = picture_flaw_description;
+    }
 
     public Integer getPicture_firstexammember() {
         return picture_firstexammember;
@@ -104,7 +155,13 @@ public class Picture {
     }
 
 
+    public String getPicture_parts_Introductions() {
+        return picture_parts_Introductions;
+    }
 
+    public void setPicture_parts_Introductions(String picture_parts_Introductions) {
+        this.picture_parts_Introductions = picture_parts_Introductions;
+    }
 
     public Integer getPicture_width() {
         return picture_width;
@@ -123,9 +180,21 @@ public class Picture {
     }
 
 
+    public String getPicture_conclusion() {
+        return picture_conclusion;
+    }
 
+    public void setPicture_conclusion(String picture_conclusion) {
+        this.picture_conclusion = picture_conclusion;
+    }
 
+    public String getPicture_welding_operator() {
+        return picture_welding_operator;
+    }
 
+    public void setPicture_welding_operator(String picture_welding_operator) {
+        this.picture_welding_operator = picture_welding_operator;
+    }
 
     public String getPicture_transpath() {
         return picture_transpath;

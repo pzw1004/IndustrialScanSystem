@@ -12,6 +12,28 @@ public class Requisition {
     @GeneratedValue
     private Integer requisition_id;
     //申请单id
+    private String requisition_material;
+    //材质
+    private String requisition_focus_size;
+    //焦点尺寸
+    private String requisition_source_strength;
+    //源强(Ci)
+    private String requisition_souce_age;
+    //源龄(天)
+    private String requisition_testing_instrument;
+    //检测设备
+    private String requisition_military_inspection_id;
+    //军检号
+    private Date requisition_complete_date;
+    //完工日期
+    private String requisition_testing_rate;
+    //检测比例
+    private String requisition_bevel_form;
+    //坡口形式
+    private String requisition_transillumination;
+    //透照方式
+    private Date requisition_testing_date;
+    //检测日期
     private String requisition_number;
     //申请单工程编号
     private String requisition_name;
@@ -107,6 +129,86 @@ public class Requisition {
 
     private String requisition_last_teststandard;
 
+    public String getRequisition_material() {
+        return requisition_material;
+    }
+
+    public void setRequisition_material(String requisition_material) {
+        this.requisition_material = requisition_material;
+    }
+
+    public String getRequisition_focus_size() {
+        return requisition_focus_size;
+    }
+
+    public void setRequisition_focus_size(String requisition_focus_size) {
+        this.requisition_focus_size = requisition_focus_size;
+    }
+
+    public String getRequisition_source_strength() {
+        return requisition_source_strength;
+    }
+
+    public void setRequisition_source_strength(String requisition_source_strength) {
+        this.requisition_source_strength = requisition_source_strength;
+    }
+
+    public String getRequisition_souce_age() {
+        return requisition_souce_age;
+    }
+
+    public void setRequisition_souce_age(String requisition_souce_age) {
+        this.requisition_souce_age = requisition_souce_age;
+    }
+
+    public String getRequisition_testing_instrument() {
+        return requisition_testing_instrument;
+    }
+
+    public void setRequisition_testing_instrument(String requisition_testing_instrument) {
+        this.requisition_testing_instrument = requisition_testing_instrument;
+    }
+
+    public String getRequisition_testing_rate() {
+        return requisition_testing_rate;
+    }
+
+    public void setRequisition_testing_rate(String requisition_testing_rate) {
+        this.requisition_testing_rate = requisition_testing_rate;
+    }
+
+    public String getRequisition_bevel_form() {
+        return requisition_bevel_form;
+    }
+
+    public void setRequisition_bevel_form(String requisition_bevel_form) {
+        this.requisition_bevel_form = requisition_bevel_form;
+    }
+
+    public String getRequisition_transillumination() {
+        return requisition_transillumination;
+    }
+
+    public void setRequisition_transillumination(String requisition_transillumination) {
+        this.requisition_transillumination = requisition_transillumination;
+    }
+
+    public Date getRequisition_testing_date() {
+        return requisition_testing_date;
+    }
+
+    public void setRequisition_testing_date(Date requisition_testing_date) {
+        this.requisition_testing_date = requisition_testing_date;
+    }
+
+    public Date getRequisition_complete_date() {
+        return requisition_complete_date;
+    }
+
+    public void setRequisition_complete_date(Date requisition_complete_date) {
+        this.requisition_complete_date = requisition_complete_date;
+    }
+
     public Integer getRequisition_last_thickness() {
         return requisition_last_thickness;
     }
@@ -134,6 +236,14 @@ public class Requisition {
 
     public String getRequisition_number() {
         return requisition_number;
+    }
+
+    public String getRequisition_military_inspection_id() {
+        return requisition_military_inspection_id;
+    }
+
+    public void setRequisition_military_inspection_id(String requisition_military_inspection_id) {
+        this.requisition_military_inspection_id = requisition_military_inspection_id;
     }
 
     public void setRequisition_number(String requisition_number) {
