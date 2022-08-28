@@ -37,6 +37,20 @@ public class PolygonRestController {
         return polygonRespository.selectPolygonListByPictureId(picture_id);
     }
 
+    /**
+     * 存储单个人工标注的polygon
+     * @param polygon
+     * @param picture_id
+     * @return
+     */
+    @RequestMapping(value = "/saveOneMemberPolygon" )
+    public List<Polygon> saveOneMemberPolygon(@RequestBody Polygon polygon,
+                                         @RequestParam("picture_id")  Integer picture_id){///
+
+        polygonRespository.save(polygon);
+        return  polygonRespository.selectPolygonListByPictureId(picture_id);
+    }
+
     @RequestMapping(value = "/getPolygonArray" )
     public List<Polygon> getPolygonArray(@RequestBody List<Polygon> damageJsonList,
                                             @RequestParam("picture_id")  Integer picture_id){///

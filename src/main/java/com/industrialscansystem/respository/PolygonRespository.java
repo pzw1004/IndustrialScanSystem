@@ -15,7 +15,7 @@ import java.util.List;
 public interface PolygonRespository extends JpaRepository<Polygon,Integer>
 {
     //@Modifying
-    @Query(value = "select * from polygon, damage_type where flag=1 and polygon_picture_id=?1 ",nativeQuery = true)
+    @Query(value = "select * from polygon, damage_type where flag=1 and polygon_picture_id=?1 and polygon.polygon_damage_type = damage_type.damagetype_id",nativeQuery = true)
     public List<Polygon>  selectPolygonListByPictureId(Integer polygon_picture_id);
 
     @Modifying
