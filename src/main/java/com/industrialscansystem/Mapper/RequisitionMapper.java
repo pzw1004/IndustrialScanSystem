@@ -23,7 +23,28 @@ public interface RequisitionMapper {
     List<Requisition> getRequisitionListPictures();
 
     @Select("SELECT * FROM `requisition`")
-    List<Requisition> getRequisitionFile();
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFile();
+
+    @Select("SELECT * FROM `requisition` where requisition_testing_rate is not null group by requisition_testing_rate")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByTestingRate();
+
+    @Select("SELECT * FROM `requisition` where requisition_bevel_form is not null  group by requisition_bevel_form")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByBevelForm();
+
+    @Select("SELECT * FROM `requisition` where requisition_filmtype is not null  group by requisition_filmtype")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByFilmtype();
+
+    @Select("SELECT * FROM `requisition` where requisition_transillumination is not null  group by requisition_transillumination")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByTransillumination();
+
+    @Select("SELECT * FROM `requisition` where requisition_focus_size is not null  group by requisition_focus_size")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByFocusSize();
+
+    @Select("SELECT * FROM `requisition` where requisition_sensitization_method is not null  group by requisition_sensitization_method")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctBySensitizationMethod();
+
+    @Select("SELECT * FROM `requisition` where requisition_film_processing_method is not null  group by requisition_film_processing_method")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByFilmProcessingMethod();
 
     //通过mybatis查询不重复自动list requisition_samplenumberList
     @Select("select distinct requisition_samplenumber from requisition WHERE requisition_samplenumber IS NOT NULL ")
