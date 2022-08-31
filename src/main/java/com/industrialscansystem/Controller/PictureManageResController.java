@@ -7,6 +7,7 @@ import com.industrialscansystem.Service.DetectionService;
 import com.industrialscansystem.Service.DetectionThread;
 import com.industrialscansystem.respository.DamageStatisticVORespository;
 import com.industrialscansystem.respository.PictureRespository;
+import com.industrialscansystem.respository.PolygonRespository;
 import com.industrialscansystem.respository.RetangleRespository;
 import com.industrialscansystem.util.DeleteFileUtil;
 import com.industrialscansystem.util.EnvironmentPath;
@@ -20,7 +21,8 @@ import java.util.List;
 
 @RestController
 public class PictureManageResController {
-
+    @Autowired
+    private PolygonRespository polygonRespository;
     @Autowired
     private PictureRespository pictureRespository;
     @Autowired
@@ -32,6 +34,22 @@ public class PictureManageResController {
     @Autowired
     private DamageStatisticVORespository damageStatisticVORespository;
 
+    @RequestMapping(value = "/sendToApitest/{picture_id}")
+    public String sendToApitest(@PathVariable("picture_id") int picture_id) throws InterruptedException {
+        List<Polygon> polygonList = polygonRespository.selectPolygonListByPictureId(picture_id);
+        Picture picture = pictureRespository.getPictureById(picture_id);
+        DetectionThread detectionThread = new DetectionThread(picture.getPicture_id());
+        System.out.println(picture.getPicture_id());
+        detectionThread.start();
+        detectionThread.join();
+        return "success";
+    }
+
+    @RequestMapping(value = "/horizontaFilpPicture/{picture_id}")
+    public String horizontaFilpPicture(@PathVariable("picture_id") int picture_id){
+
+        return "success";
+    }
 
 
     @RequestMapping(value = "/deletePictureById/{picture_id}")
