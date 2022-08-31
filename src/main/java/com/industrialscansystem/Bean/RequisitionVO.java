@@ -1,12 +1,14 @@
 package com.industrialscansystem.Bean;
 
+import org.springframework.beans.BeanUtils;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.sql.Date;
 
 @Entity
-public class Requisition {
+public class RequisitionVO {
     //初始化申请单信息表
     @Id
     @GeneratedValue
@@ -131,16 +133,17 @@ public class Requisition {
 
     private String requisition_military_inspection_id;
 
-    private Integer requisition_product_id;
+    private String requistion_film_size;
 
-    public Integer getRequistion_product_id() {
-        return requisition_product_id;
+    private String requisition_product_name;
+
+    public String getRequisition_product_name() {
+        return requisition_product_name;
     }
 
-    public void setRequisition_product_id(Integer requistion_product_id) {
-        this.requisition_product_id = requistion_product_id;
+    public void setRequisition_product_name(String requisition_product_name) {
+        this.requisition_product_name = requisition_product_name;
     }
-
 
     public Integer getRequisition_last_thickness() {
         return requisition_last_thickness;
@@ -244,6 +247,14 @@ public class Requisition {
 
     public void setRequisition_military_inspection_id(String requisition_military_inspection_id) {
         this.requisition_military_inspection_id = requisition_military_inspection_id;
+    }
+
+    public String getRequistion_film_size() {
+        return requistion_film_size;
+    }
+
+    public void setRequistion_film_size(String requistion_film_size) {
+        this.requistion_film_size = requistion_film_size;
     }
 
     public String getRequisition_last_teststandard() {
@@ -559,5 +570,11 @@ public class Requisition {
 
     public void setRequisition_thirdopinion(String requisition_thirdopinion) {
         this.requisition_thirdopinion = requisition_thirdopinion;
+    }
+
+    public Requisition transfer2Requisition() {
+        Requisition req = new Requisition();
+        BeanUtils.copyProperties(this, req);
+        return req;
     }
 }
