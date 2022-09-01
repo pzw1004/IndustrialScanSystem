@@ -113,7 +113,7 @@ public class Requisition {
 
     private String requisition_transillumination;
 
-    private Date requisition_testing_date;
+    private String requisition_testing_date;
 
     private String requisition_testing_instrument;
 
@@ -132,6 +132,8 @@ public class Requisition {
     private String requisition_military_inspection_id;
 
     private Integer requisition_product_id;
+
+    private String requisition_complete_date;
 
     public Integer getRequistion_product_id() {
         return requisition_product_id;
@@ -174,12 +176,24 @@ public class Requisition {
         this.requisition_transillumination = requisition_transillumination;
     }
 
-    public Date getRequisition_testing_date() {
+    public String getRequisition_testing_date() {
         return requisition_testing_date;
     }
 
-    public void setRequisition_testing_date(Date requisition_testing_date) {
+    public void setRequisition_testing_date(String requisition_testing_date) {
         this.requisition_testing_date = requisition_testing_date;
+    }
+
+    public Integer getRequisition_product_id() {
+        return requisition_product_id;
+    }
+
+    public String getRequisition_complete_date() {
+        return requisition_complete_date;
+    }
+
+    public void setRequisition_complete_date(String requisition_complete_date) {
+        this.requisition_complete_date = requisition_complete_date;
     }
 
     public String getRequisition_testing_instrument() {
