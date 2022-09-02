@@ -19,7 +19,6 @@ public class LoginRestController {
     public Member getLoginMember(@RequestBody Member member){
 
          Member userInfo = memberRespository.findMemberUserMsg(member.getMember_username(),member.getMember_password());
-//         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
          return userInfo;
      }
 
