@@ -3,6 +3,24 @@ package com.industrialscansystem.Bean;
 public class ResultFromDetection {
     public String[][] position;
     public String[][] belief;
+    public String houdu;
+    public String[] edge;
+
+    public String getHoudu() {
+        return houdu;
+    }
+
+    public void setHoudu(String houdu) {
+        this.houdu = houdu;
+    }
+
+    public String[] getEdge() {
+        return edge;
+    }
+
+    public void setEdge(String[] edge) {
+        this.edge = edge;
+    }
 
     public String[][] getPosition() {
         return position;

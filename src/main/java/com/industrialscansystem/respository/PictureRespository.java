@@ -62,9 +62,14 @@ public interface PictureRespository extends JpaRepository<Picture,Integer> {
     @Query(value = "update picture set picture_secondexamresult=?1 where picture_id=?2",nativeQuery = true)
     public void  updatePictureByIdAndExamSecondresult(String examresult ,Integer id);
 
+
+    @Modifying
+    @Query(value = "update picture set picture_thickness=?1 where picture_id=?2",nativeQuery = true)
+    public void  updatePicture_thicknessById(int examresult ,Integer id);
+
     @Modifying
     @Query(value = "update picture set picture_thirdexamresult=?1 where picture_id=?2",nativeQuery = true)
-    public void  updatePictureByIdAndExamThirdresult(String examresult ,Integer id);
+    public void  updatePictureByIdAndExamThirdresult(int thickness ,Integer id);
 
     @Modifying
     @Query(value = "update picture set picture_width=?1 , picture_height=?2 ,picture_transpath=?3 where picture_id=?4",nativeQuery = true)

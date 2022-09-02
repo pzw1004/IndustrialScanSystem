@@ -205,7 +205,7 @@ public class ImageRotateUtil
                 }
             }
 
-            ImageIO.write(bufferedimage, "jpg", file);
+            ImageIO.write(bufferedimage, "png", file);
 
         } catch (Exception e) {
             e.printStackTrace();

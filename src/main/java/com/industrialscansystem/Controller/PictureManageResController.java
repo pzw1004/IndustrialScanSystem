@@ -5,6 +5,7 @@ import com.industrialscansystem.Bean.*;
 import com.industrialscansystem.Mapper.PictureMapper;
 import com.industrialscansystem.Service.DetectionService;
 import com.industrialscansystem.Service.DetectionThread;
+import com.industrialscansystem.Service.ImageRotate;
 import com.industrialscansystem.respository.DamageStatisticVORespository;
 import com.industrialscansystem.respository.PictureRespository;
 import com.industrialscansystem.respository.PolygonRespository;
@@ -29,6 +30,9 @@ public class PictureManageResController {
     private RetangleRespository retangleRespository;
     @Autowired
     private DetectionService detectionService;
+
+    @Autowired
+    private ImageRotate imageRotate;
     @Autowired
     PictureMapper pictureMapper;
     @Autowired
@@ -46,12 +50,18 @@ public class PictureManageResController {
     }
 
     @RequestMapping(value = "/horizontaFilpPicture/{picture_id}")
-    public String horizontaFilpPicture(@PathVariable("picture_id") int picture_id){
-
+    public String horizontaFilpPicture(@PathVariable("picture_id") int picture_id) throws Exception {
+        Picture picture = pictureRespository.getPictureById(picture_id);
+        imageRotate.horizontaFilpPicture(picture);
         return "success";
     }
 
-
+    @RequestMapping(value = "/verticalFilpPicture/{picture_id}")
+    public String verticalFilpPicture(@PathVariable("picture_id") int picture_id) throws Exception {
+        Picture picture = pictureRespository.getPictureById(picture_id);
+        imageRotate.horizontaFilpPicture(picture);
+        return "success";
+    }
     @RequestMapping(value = "/deletePictureById/{picture_id}")
     public List<Picture>  deletePictureById(@PathVariable("picture_id") int picture_id){
         Picture picture = pictureRespository.getPictureById(picture_id);

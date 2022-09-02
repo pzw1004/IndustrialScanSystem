@@ -62,6 +62,13 @@ public class RequisitionRestContorller {
 
     @Autowired
     ProductRespository productRespository;
+//    @RequestMapping(value = "/uploadFileList/{requisition_id}")
+//    public List<Requisition> getRequisitionByProductId(@RequestParam("requisition_id") Integer requisition_id,@RequestParam("product_id") Integer product_id){
+//        List<Requisition> lr = requisitionRespository.selectRequisitionByproductId(requisition_id,product_id);
+//        return lr;
+//    }
+
+
 
     @RequestMapping(value = "/uploadFileList/{requisition_id}")
     public void uploadFileList(@PathParam("uploadFile") MultipartFile[] uploadFile,

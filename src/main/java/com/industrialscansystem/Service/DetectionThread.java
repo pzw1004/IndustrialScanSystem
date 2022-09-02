@@ -35,7 +35,6 @@ public class DetectionThread extends Thread {
     private int detectionId;
 
     private PolygonRespository polygonRespository;
-
     /**
      * 循环执行检测的构造方法
      * @param
@@ -140,6 +139,8 @@ public class DetectionThread extends Thread {
 //            JSONArray ja = JSONArray.parseArray(res);
             String[][] points = resultFromDetection.getPosition();
             String[][] beliefs = resultFromDetection.getBelief();
+            String houdu = resultFromDetection.getHoudu();
+            String[] edge = resultFromDetection.getEdge();
             for(int i = 0; i < points.length; i++){
 //                JSONArray ja_item = JSONArray.parseArray(ja.getString(i));
 //                points[i] = new String[ja_item.size()];
@@ -162,6 +163,14 @@ public class DetectionThread extends Thread {
 
             try{
                 polygonRespository.deletePolygonListByPictureId(pp.getPicture_id());
+
+                Polygon polygon1 = new Polygon();
+                polygon1.setPolygon_pt(edge[0]);
+                polygon1.setPolygon_picture_id(pp.getPicture_id());
+                polygon1.setPolygon_author("Algorithm");
+                polygon1.setPolygon_damage_type(6);
+                polygonRespository.save(polygon1);
+//                pictureRespository.updatePicture_thicknessById(Integer.parseInt(houdu),pp.getPicture_id());
                 for(int i = 0; i < points.length; i++){
                     for(int j = 0; j < points[i].length; j++){
                         String detect_list=points[i][j];
@@ -204,6 +213,7 @@ public class DetectionThread extends Thread {
             finally {
                 pp.setPicture_dir(tempDir);
                 pictureRespository.save(pp);
+                pictureRespository.updatePicture_thicknessById(Integer.parseInt(houdu),pp.getPicture_id());
             }
 //            try
 //            {
