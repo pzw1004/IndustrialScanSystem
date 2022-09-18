@@ -6,6 +6,7 @@ import com.industrialscansystem.respository.ProductRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,8 +22,9 @@ public class ProductController {
         return productRespository.getAllProduct();
     }
 
-    @RequestMapping(value = "/getProductByProductId/{product_id}")
-    public Product getProductByProductId(@PathVariable("product_id") int product_id){
+    @RequestMapping(value = "/getProductByProductId")
+    public Product getProductByProductId(@RequestParam("product_id") Integer product_id){
+//        System.out.println(product_id);
         return productRespository.getProductByProductId(product_id);
     }
 

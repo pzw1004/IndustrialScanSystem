@@ -1,5 +1,7 @@
 package com.industrialscansystem.Bean;
 
+import org.springframework.beans.BeanUtils;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -134,6 +136,66 @@ public class Requisition {
     private Integer requisition_product_id;
 
     private String requisition_complete_date;
+
+    private String requisition_exposuretime_hour;
+
+    private String requisition_exposuretime_minute;
+
+    private String requisition_exposuretime_second;
+
+    private String requisition_intensifyscreen_front;
+
+    private String requisition_intensifyscreen_middle;
+
+    private String requisition_intensifyscreen_behind;
+
+    public String getRequisition_exposuretime_hour() {
+        return requisition_exposuretime_hour;
+    }
+
+    public void setRequisition_exposuretime_hour(String requisition_exposuretime_hour) {
+        this.requisition_exposuretime_hour = requisition_exposuretime_hour;
+    }
+
+    public String getRequisition_exposuretime_minute() {
+        return requisition_exposuretime_minute;
+    }
+
+    public void setRequisition_exposuretime_minute(String requisition_exposuretime_minute) {
+        this.requisition_exposuretime_minute = requisition_exposuretime_minute;
+    }
+
+    public String getRequisition_exposuretime_second() {
+        return requisition_exposuretime_second;
+    }
+
+    public void setRequisition_exposuretime_second(String requisition_exposuretime_second) {
+        this.requisition_exposuretime_second = requisition_exposuretime_second;
+    }
+
+    public String getRequisition_intensifyscreen_front() {
+        return requisition_intensifyscreen_front;
+    }
+
+    public void setRequisition_intensifyscreen_front(String requisition_intensifyscreen_front) {
+        this.requisition_intensifyscreen_front = requisition_intensifyscreen_front;
+    }
+
+    public String getRequisition_intensifyscreen_middle() {
+        return requisition_intensifyscreen_middle;
+    }
+
+    public void setRequisition_intensifyscreen_middle(String requisition_intensifyscreen_middle) {
+        this.requisition_intensifyscreen_middle = requisition_intensifyscreen_middle;
+    }
+
+    public String getRequisition_intensifyscreen_behind() {
+        return requisition_intensifyscreen_behind;
+    }
+
+    public void setRequisition_intensifyscreen_behind(String requisition_intensifyscreen_behind) {
+        this.requisition_intensifyscreen_behind = requisition_intensifyscreen_behind;
+    }
 
     public Integer getRequistion_product_id() {
         return requisition_product_id;
@@ -573,5 +635,11 @@ public class Requisition {
 
     public void setRequisition_thirdopinion(String requisition_thirdopinion) {
         this.requisition_thirdopinion = requisition_thirdopinion;
+    }
+
+    public RequisitionVO transfer2RequisitionVO() {
+        RequisitionVO req = new RequisitionVO();
+        BeanUtils.copyProperties(this, req);
+        return req;
     }
 }

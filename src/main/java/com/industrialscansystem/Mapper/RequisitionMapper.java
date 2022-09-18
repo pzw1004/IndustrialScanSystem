@@ -46,6 +46,24 @@ public interface RequisitionMapper {
     @Select("SELECT * FROM `requisition` where requisition_film_processing_method is not null  group by requisition_film_processing_method")
     List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByFilmProcessingMethod();
 
+    @Select("SELECT * FROM `requisition` where requisition_qualificationlevel is not null group by requisition_qualificationlevel")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByQualificationLevel();
+
+    @Select("SELECT * FROM `requisition` where requisition_testing_instrument is not null group by requisition_testing_instrument")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByTestingInstrument();
+
+    @Select("SELECT * FROM `requisition` where requisition_weldingmethod is not null group by requisition_weldingmethod")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByWeldingMethod();
+
+    @Select("SELECT * FROM `requisition` where requisition_intensifyscreen_front is not null group by requisition_intensifyscreen_front")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByIntensifyScreenFront();
+
+    @Select("SELECT * FROM `requisition` where requisition_intensifyscreen_middle is not null group by requisition_intensifyscreen_middle")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByIntensifyScreenMiddle();
+
+    @Select("SELECT * FROM `requisition` where requisition_intensifyscreen_behind is not null group by requisition_intensifyscreen_behind")
+    List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByIntensifyScreenBehind();
+
     //通过mybatis查询不重复自动list requisition_samplenumberList
     @Select("select distinct requisition_samplenumber from requisition WHERE requisition_samplenumber IS NOT NULL ")
     List<com.industrialscansystem.Bean.Requisition> getRequisitionListByDistinctSamplenumber();

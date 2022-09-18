@@ -115,7 +115,7 @@ public class RequisitionVO {
 
     private String requisition_transillumination;
 
-    private Date requisition_testing_date;
+    private String requisition_testing_date;
 
     private String requisition_testing_instrument;
 
@@ -133,9 +133,69 @@ public class RequisitionVO {
 
     private String requisition_military_inspection_id;
 
-    private String requistion_film_size;
+    private String requisition_complete_date;
 
     private String requisition_product_name;
+
+    private String requisition_exposuretime_hour;
+
+    private String requisition_exposuretime_minute;
+
+    private String requisition_exposuretime_second;
+
+    private String requisition_intensifyscreen_front;
+
+    private String requisition_intensifyscreen_middle;
+
+    private String requisition_intensifyscreen_behind;
+
+    public String getRequisition_intensifyscreen_behind() {
+        return requisition_intensifyscreen_behind;
+    }
+
+    public void setRequisition_intensifyscreen_behind(String requisition_intensifyscreen_behind) {
+        this.requisition_intensifyscreen_behind = requisition_intensifyscreen_behind;
+    }
+
+    public String getRequisition_exposuretime_hour() {
+        return requisition_exposuretime_hour;
+    }
+
+    public void setRequisition_exposuretime_hour(String requisition_exposuretime_hour) {
+        this.requisition_exposuretime_hour = requisition_exposuretime_hour;
+    }
+
+    public String getRequisition_exposuretime_minute() {
+        return requisition_exposuretime_minute;
+    }
+
+    public void setRequisition_exposuretime_minute(String requisition_exposuretime_minute) {
+        this.requisition_exposuretime_minute = requisition_exposuretime_minute;
+    }
+
+    public String getRequisition_exposuretime_second() {
+        return requisition_exposuretime_second;
+    }
+
+    public void setRequisition_exposuretime_second(String requisition_exposuretime_second) {
+        this.requisition_exposuretime_second = requisition_exposuretime_second;
+    }
+
+    public String getRequisition_intensifyscreen_front() {
+        return requisition_intensifyscreen_front;
+    }
+
+    public void setRequisition_intensifyscreen_front(String requisition_intensifyscreen_front) {
+        this.requisition_intensifyscreen_front = requisition_intensifyscreen_front;
+    }
+
+    public String getRequisition_intensifyscreen_middle() {
+        return requisition_intensifyscreen_middle;
+    }
+
+    public void setRequisition_intensifyscreen_middle(String requisition_intensifyscreen_middle) {
+        this.requisition_intensifyscreen_middle = requisition_intensifyscreen_middle;
+    }
 
     public String getRequisition_product_name() {
         return requisition_product_name;
@@ -177,11 +237,11 @@ public class RequisitionVO {
         this.requisition_transillumination = requisition_transillumination;
     }
 
-    public Date getRequisition_testing_date() {
+    public String getRequisition_testing_date() {
         return requisition_testing_date;
     }
 
-    public void setRequisition_testing_date(Date requisition_testing_date) {
+    public void setRequisition_testing_date(String requisition_testing_date) {
         this.requisition_testing_date = requisition_testing_date;
     }
 
@@ -249,12 +309,12 @@ public class RequisitionVO {
         this.requisition_military_inspection_id = requisition_military_inspection_id;
     }
 
-    public String getRequistion_film_size() {
-        return requistion_film_size;
+    public String getRequisition_complete_date() {
+        return requisition_complete_date;
     }
 
-    public void setRequistion_film_size(String requistion_film_size) {
-        this.requistion_film_size = requistion_film_size;
+    public void setRequisition_complete_date(String requisition_complete_date) {
+        this.requisition_complete_date = requisition_complete_date;
     }
 
     public String getRequisition_last_teststandard() {

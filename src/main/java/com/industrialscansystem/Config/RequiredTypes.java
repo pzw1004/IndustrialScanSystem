@@ -15,6 +15,12 @@ public class RequiredTypes {
     private List<Requisition> distinctFocusSize;
     private List<Requisition> distinctSensitizationMethod;
     private List<Requisition> distinctFilmProcessingMethod;
+    private List<Requisition> distinctQualificationLevel;
+    private List<Requisition> distinctTestingInstrument;
+    private List<Requisition> distinctWeldingMethod;
+    private List<Requisition> distinctIntensifyScreenFront;
+    private List<Requisition> distinctIntensifyScreenMiddle;
+    private List<Requisition> distinctIntensifyScreenBehind;
 
     public RequiredTypes() {
         distinctTestingRate = dealDistinctTestingRate();
@@ -24,6 +30,60 @@ public class RequiredTypes {
         distinctFocusSize = dealDistinctFocusSize();
         distinctSensitizationMethod = dealDistinctSensitizationMethod();
         distinctFilmProcessingMethod = dealDistinctFilmProcessingMethod();
+        distinctQualificationLevel = dealDistinctQualificationLevel();
+        distinctTestingInstrument = dealDistinctTestingInstrument();
+        distinctWeldingMethod = dealDistinctWeldingMethod();
+        distinctIntensifyScreenFront = dealDistinctIntensifyScreenFront();
+        distinctIntensifyScreenMiddle = dealDistinctIntensifyScreenMiddle();
+        distinctIntensifyScreenBehind = dealDistinctIntensifyScreenBehind();
+    }
+
+    public List<Requisition> getDistinctQualificationLevel() {
+        return distinctQualificationLevel;
+    }
+
+    public void setDistinctQualificationLevel(List<Requisition> distinctQualificationLevel) {
+        this.distinctQualificationLevel = distinctQualificationLevel;
+    }
+
+    public List<Requisition> getDistinctTestingInstrument() {
+        return distinctTestingInstrument;
+    }
+
+    public void setDistinctTestingInstrument(List<Requisition> distinctTestingInstrument) {
+        this.distinctTestingInstrument = distinctTestingInstrument;
+    }
+
+    public List<Requisition> getDistinctWeldingMethod() {
+        return distinctWeldingMethod;
+    }
+
+    public void setDistinctWeldingMethod(List<Requisition> distinctWeldingMethod) {
+        this.distinctWeldingMethod = distinctWeldingMethod;
+    }
+
+    public List<Requisition> getDistinctIntensifyScreenFront() {
+        return distinctIntensifyScreenFront;
+    }
+
+    public void setDistinctIntensifyScreenFront(List<Requisition> distinctIntensifyScreenFront) {
+        this.distinctIntensifyScreenFront = distinctIntensifyScreenFront;
+    }
+
+    public List<Requisition> getDistinctIntensifyScreenMiddle() {
+        return distinctIntensifyScreenMiddle;
+    }
+
+    public void setDistinctIntensifyScreenMiddle(List<Requisition> distinctIntensifyScreenMiddle) {
+        this.distinctIntensifyScreenMiddle = distinctIntensifyScreenMiddle;
+    }
+
+    public List<Requisition> getDistinctIntensifyScreenBehind() {
+        return distinctIntensifyScreenBehind;
+    }
+
+    public void setDistinctIntensifyScreenBehind(List<Requisition> distinctIntensifyScreenBehind) {
+        this.distinctIntensifyScreenBehind = distinctIntensifyScreenBehind;
     }
 
     public List<Requisition> getDistinctTestingRate() {
@@ -130,8 +190,11 @@ public class RequiredTypes {
     public List<Requisition> dealDistinctFocusSize() {
         List<Requisition> list = new ArrayList<>();
         Requisition req1 = new Requisition();
+        Requisition req2 = new Requisition();
         req1.setRequisition_focus_size("3x3");
+        req2.setRequisition_focus_size("2x2");
         list.add(req1);
+        list.add(req2);
         return list;
     }
 
@@ -139,10 +202,16 @@ public class RequiredTypes {
         List<Requisition> list = new ArrayList<>();
         Requisition req1 = new Requisition();
         Requisition req2 = new Requisition();
+        Requisition req3 = new Requisition();
+        Requisition req4 = new Requisition();
         req1.setRequisition_sensitization_method("铅增感");
-        req2.setRequisition_sensitization_method("其它");
+        req2.setRequisition_sensitization_method("铜增感");
+        req3.setRequisition_sensitization_method("钢增感");
+        req4.setRequisition_sensitization_method("其它");
         list.add(req1);
         list.add(req2);
+        list.add(req3);
+        list.add(req4);
         return list;
     }
 
@@ -168,6 +237,96 @@ public class RequiredTypes {
         list.add(req1);
         list.add(req2);
         list.add(req3);
+        return list;
+    }
+
+    public List<Requisition> dealDistinctQualificationLevel() {
+        List<Requisition> list = new ArrayList<>();
+        Requisition req1 = new Requisition();
+        Requisition req2 = new Requisition();
+        Requisition req3 = new Requisition();
+        Requisition req4 = new Requisition();
+        Requisition req5 = new Requisition();
+        Requisition req6 = new Requisition();
+        req1.setRequisition_qualificationlevel("1级");
+        req2.setRequisition_qualificationlevel("2级");
+        req3.setRequisition_qualificationlevel("I级");
+        req4.setRequisition_qualificationlevel("II级");
+        req5.setRequisition_qualificationlevel("合格");
+        req6.setRequisition_qualificationlevel("不合格");
+        list.add(req1);
+        list.add(req2);
+        list.add(req3);
+        list.add(req4);
+        list.add(req5);
+        list.add(req6);
+        return list;
+    }
+
+    public List<Requisition> dealDistinctTestingInstrument() {
+        List<Requisition> list = new ArrayList<>();
+        Requisition req1 = new Requisition();
+        Requisition req2 = new Requisition();
+        Requisition req3 = new Requisition();
+        req1.setRequisition_testing_instrument("X机");
+        req2.setRequisition_testing_instrument("γ射线源");
+        req3.setRequisition_testing_instrument("加速器");
+        list.add(req1);
+        list.add(req2);
+        list.add(req3);
+        return list;
+    }
+
+    public List<Requisition> dealDistinctWeldingMethod() {
+        List<Requisition> list = new ArrayList<>();
+        Requisition req1 = new Requisition();
+        Requisition req2 = new Requisition();
+        Requisition req3 = new Requisition();
+        Requisition req4 = new Requisition();
+        Requisition req5 = new Requisition();
+        req1.setRequisition_weldingmethod("手工焊");
+        req2.setRequisition_weldingmethod("自动焊");
+        req3.setRequisition_weldingmethod("气体保护焊");
+        req4.setRequisition_weldingmethod("氩弧焊");
+        req5.setRequisition_weldingmethod("埋弧焊");
+        list.add(req1);
+        list.add(req2);
+        list.add(req3);
+        list.add(req4);
+        list.add(req5);
+        return list;
+    }
+
+    public List<Requisition> dealDistinctIntensifyScreenFront() {
+        List<Requisition> list = new ArrayList<>();
+        Requisition req1 = new Requisition();
+        Requisition req2 = new Requisition();
+        req1.setRequisition_intensifyscreen_front("0.1");
+        req2.setRequisition_intensifyscreen_front("0.16");
+        list.add(req1);
+        list.add(req2);
+        return list;
+    }
+
+    public List<Requisition> dealDistinctIntensifyScreenMiddle() {
+        List<Requisition> list = new ArrayList<>();
+        Requisition req1 = new Requisition();
+        Requisition req2 = new Requisition();
+        req1.setRequisition_intensifyscreen_middle("0.1");
+        req2.setRequisition_intensifyscreen_middle("0.16");
+        list.add(req1);
+        list.add(req2);
+        return list;
+    }
+
+    public List<Requisition> dealDistinctIntensifyScreenBehind() {
+        List<Requisition> list = new ArrayList<>();
+        Requisition req1 = new Requisition();
+        Requisition req2 = new Requisition();
+        req1.setRequisition_intensifyscreen_behind("0.1");
+        req2.setRequisition_intensifyscreen_behind("0.16");
+        list.add(req1);
+        list.add(req2);
         return list;
     }
 }

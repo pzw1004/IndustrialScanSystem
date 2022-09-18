@@ -436,10 +436,83 @@ public class RequisitionRestContorller {
         return res;
     }
 
+    @RequestMapping(value = "/getRequisitionFileDistinctByQualificationLevel")
+    public List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByQualificationLevel(){
+        List<com.industrialscansystem.Bean.Requisition> tmp = new ArrayList<>(requiredTypes.getDistinctQualificationLevel());
+        List<com.industrialscansystem.Bean.Requisition> list = requisitionMapper.getRequisitionFileDistinctByQualificationLevel();
+        tmp.addAll(list);
+        List<com.industrialscansystem.Bean.Requisition> res = tmp.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(
+                        f -> f.getRequisition_qualificationlevel()))), ArrayList::new));
+        return res;
+    }
+
+    @RequestMapping(value = "/getRequisitionFileDistinctByTestingInstrument")
+    public List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByTestingInstrument(){
+        List<com.industrialscansystem.Bean.Requisition> tmp = new ArrayList<>(requiredTypes.getDistinctTestingInstrument());
+        List<com.industrialscansystem.Bean.Requisition> list = requisitionMapper.getRequisitionFileDistinctByTestingInstrument();
+        tmp.addAll(list);
+        List<com.industrialscansystem.Bean.Requisition> res = tmp.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(
+                        f -> f.getRequisition_testing_instrument()))), ArrayList::new));
+        return res;
+    }
+
+    @RequestMapping(value = "/getRequisitionFileDistinctByWeldingMethod")
+    public List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByWeldingMethod(){
+        List<com.industrialscansystem.Bean.Requisition> tmp = new ArrayList<>(requiredTypes.getDistinctWeldingMethod());
+        List<com.industrialscansystem.Bean.Requisition> list = requisitionMapper.getRequisitionFileDistinctByWeldingMethod();
+        tmp.addAll(list);
+        List<com.industrialscansystem.Bean.Requisition> res = tmp.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(
+                        f -> f.getRequisition_weldingmethod()))), ArrayList::new));
+        return res;
+    }
+
+    @RequestMapping(value = "/getRequisitionFileDistinctByIntensifyScreenFront")
+    public List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByIntensifyScreenFront(){
+        List<com.industrialscansystem.Bean.Requisition> tmp = new ArrayList<>(requiredTypes.getDistinctIntensifyScreenFront());
+        List<com.industrialscansystem.Bean.Requisition> list = requisitionMapper.getRequisitionFileDistinctByIntensifyScreenFront();
+        tmp.addAll(list);
+        List<com.industrialscansystem.Bean.Requisition> res = tmp.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(
+                        f -> f.getRequisition_intensifyscreen_front()))), ArrayList::new));
+        return res;
+    }
+
+    @RequestMapping(value = "/getRequisitionFileDistinctByIntensifyScreenMiddle")
+    public List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByIntensifyScreenMiddle(){
+        List<com.industrialscansystem.Bean.Requisition> tmp = new ArrayList<>(requiredTypes.getDistinctIntensifyScreenMiddle());
+        List<com.industrialscansystem.Bean.Requisition> list = requisitionMapper.getRequisitionFileDistinctByIntensifyScreenMiddle();
+        tmp.addAll(list);
+        List<com.industrialscansystem.Bean.Requisition> res = tmp.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(
+                        f -> f.getRequisition_intensifyscreen_middle()))), ArrayList::new));
+        return res;
+    }
+
+    @RequestMapping(value = "/getRequisitionFileDistinctByIntensifyScreenBehind")
+    public List<com.industrialscansystem.Bean.Requisition> getRequisitionFileDistinctByIntensifyScreenBehind(){
+        List<com.industrialscansystem.Bean.Requisition> tmp = new ArrayList<>(requiredTypes.getDistinctIntensifyScreenBehind());
+        List<com.industrialscansystem.Bean.Requisition> list = requisitionMapper.getRequisitionFileDistinctByIntensifyScreenBehind();
+        tmp.addAll(list);
+        List<com.industrialscansystem.Bean.Requisition> res = tmp.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(
+                        f -> f.getRequisition_intensifyscreen_behind()))), ArrayList::new));
+        return res;
+    }
+
     @RequestMapping(value = "/getRequisitionList")
     public Object getRequisitionList( ){
         List<Requisition> requisitionList = requisitionRespository.findAll();
-        return requisitionList;
+        List<RequisitionVO> requisitionVOList = new ArrayList<>();
+        for (Requisition requisition: requisitionList) {
+            RequisitionVO tmp = requisition.transfer2RequisitionVO();
+            String productName = productRespository.getProductByProductId(requisition.getRequisition_product_id()).getProduct_name();
+            tmp.setRequisition_product_name(productName);
+            requisitionVOList.add(tmp);
+        }
+        return requisitionVOList;
     }
 
     //由于统计的前几个字段都等于申请单内的影像图个数，统一建方法直接统计
@@ -467,6 +540,7 @@ public class RequisitionRestContorller {
                 tempProduct = productRespository.getProductByProductName(requisition.getRequisition_product_name());
             }
             Integer productId = tempProduct.getProduct_id();
+            System.out.println(productId + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             req.setRequisition_product_id(productId);
 //            requisition.setRequisition_firstexam("未审批");
 //            requisition.setRequisition_secondexam("未审批");
@@ -474,6 +548,7 @@ public class RequisitionRestContorller {
 //            requisition.setRequisition_state(2);
 //            Date date = new Date(System.currentTimeMillis());
 //            requisition.setRequisition_entrytime(date);
+
             requisitionRespository.save(req);
             return "申请单已添加成功！请前往导入影像图";
         }
@@ -490,11 +565,14 @@ public class RequisitionRestContorller {
     }
 
     @RequestMapping(value = "/getRequisition")
-    public Requisition getRequisition(@RequestParam("requisition_id") Integer requisition_id){
+    public RequisitionVO getRequisition(@RequestParam("requisition_id") Integer requisition_id){
 
         Requisition requisition = requisitionRespository.getRequisitionById(requisition_id);
+        RequisitionVO tmp = requisition.transfer2RequisitionVO();
+        String productName = productRespository.getProductByProductId(requisition.getRequisition_product_id()).getProduct_name();
+        tmp.setRequisition_product_name(productName);
 
-        return requisition;
+        return tmp;
     }
 
     @RequestMapping(value = "/completeApproval")
