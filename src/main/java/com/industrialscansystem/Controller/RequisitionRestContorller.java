@@ -46,6 +46,8 @@ public class RequisitionRestContorller {
     private RequisitionRespository requisitionRespository;
 
     @Autowired
+    private MemberRespository memberRespository;
+    @Autowired
     private PictureRespository pictureRespository;
 
     @Autowired
@@ -243,6 +245,29 @@ public class RequisitionRestContorller {
 
 
         }
+
+    }
+
+    @RequestMapping(value = "/uploadSignature/{member_id}")
+    public void uploadSignature(@PathParam("uploadFile") MultipartFile uploadFile,
+                                @PathVariable("member_id") int member_id
+    ) throws IllegalStateException, IOException {
+
+        // String tomcatPath = EnvironmentPath.getInstance().getTomcatPath();
+        // System.out.println("tomcatPath:"+tomcatPath);//设置的全局变量，省的每次都改，嘻嘻
+
+        //Requisition requisition = requisitionRespository.getRequisitionById(requisition_id);
+        Member member = memberRespository.getMemberById(member_id);
+        SaveUploadFile saveUploadFile = new SaveUploadFile();
+        //String destination = tomcatPath + member.getMember_name();
+        String destination = "D:/Project/BoChuan/Signature/" + member.getMember_name();
+
+        saveUploadFile.saveFile(uploadFile,destination);
+        String filename = uploadFile.getOriginalFilename();
+        memberRespository.setMemberSignature(destination+'/'+filename,member_id);
+        // String filePath=tomcatPath+dir;
+        //String filePath="A:\\documents\\labwork\\weldproject\\code\\apache-tomcat-8.5.43\\webapps\\XrayImageDB\\"+dir;
+        //     String tempPath = "D:\\tomcat\\apache-tomcat-8.5.43-windows-x64\\apache-tomcat-8.5.43\\webapps\\XrayImageDB\\AJ0006AJ\\VIDARImage18.tif";
 
     }
 

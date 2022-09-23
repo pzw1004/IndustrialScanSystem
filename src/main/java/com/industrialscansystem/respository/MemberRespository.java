@@ -42,4 +42,8 @@ public interface MemberRespository extends JpaRepository<Member,Integer> {
     @Query(value = "select * from member where (member_id = ?1 )",nativeQuery = true)
     Member getMemberById(Integer member_id);
 
+    @Modifying
+    @Query(value = "update member m set m.signature =?1    where (m.member_id = ?2 )",nativeQuery = true)
+    void setMemberSignature(String path,Integer member_id);
+
 }

@@ -20,7 +20,7 @@ public class Member  {
     private  Integer member_role;
     private  String member_username;
     private String member_password;
-
+    private String signature;
     public Date getMember_jointime() {
         return member_jointime;
     }
@@ -102,5 +102,12 @@ public class Member  {
         this.member_sex = member_sex;
     }
 
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
 }

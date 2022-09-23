@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 class WebMvcConfig extends WebMvcConfigurerAdapter {
-//路径映射
+    //路径映射
     @Override
     public  void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
