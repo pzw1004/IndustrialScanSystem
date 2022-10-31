@@ -1,17 +1,5 @@
 package com.industrialscansystem.Service;
 
-import com.industrialscansystem.Bean.Polygon;
-import com.industrialscansystem.MybatisBean.Picture;
-import com.industrialscansystem.util.EnvironmentPath;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-
-import java.io.File;
-import java.util.List;
-
 public class sendToApitestService {
 //    public String sendTo(Picture p, List<Polygon> polygons){
 ////        String aiIP = EnvironmentPath.getInstance().getAiIP();

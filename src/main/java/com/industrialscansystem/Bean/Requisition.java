@@ -40,6 +40,7 @@ public class Requisition {
     //是否三级审查
     private Integer requisition_thirdexam_member;
 
+
     public Integer getRequisition_state() {
         return requisition_state;
     }
@@ -47,6 +48,7 @@ public class Requisition {
     public void setRequisition_state(Integer requisition_state) {
         this.requisition_state = requisition_state;
     }
+
 
     //三级审查人员名称
     private Integer requisition_state;
@@ -148,6 +150,132 @@ public class Requisition {
     private String requisition_intensifyscreen_middle;
 
     private String requisition_intensifyscreen_behind;
+    private String requisition_structure_name;
+    private String requisition_test_part;
+    private String requisition_surface_state;
+    private String requisition_surface_conclusion;
+    private String requisition_item_address;
+    private String requisition_contact;
+    private String requisition_test_method;
+    private String requisition_note;
+    private String requisition_management_department;
+    private String requisition_test_room;
+    private String requisition_customer;
+    private String requisition_code;
+    private String requisition_test_time;
+    private String requisition_inspector;
+
+    public String getRequisition_structure_name() {
+        return requisition_structure_name;
+    }
+
+    public void setRequisition_structure_name(String requisition_structure_name) {
+        this.requisition_structure_name = requisition_structure_name;
+    }
+
+    public String getRequisition_test_part() {
+        return requisition_test_part;
+    }
+
+    public void setRequisition_test_part(String requisition_test_part) {
+        this.requisition_test_part = requisition_test_part;
+    }
+
+    public String getRequisition_surface_state() {
+        return requisition_surface_state;
+    }
+
+    public void setRequisition_surface_state(String requisition_surface_state) {
+        this.requisition_surface_state = requisition_surface_state;
+    }
+
+    public String getRequisition_surface_conclusion() {
+        return requisition_surface_conclusion;
+    }
+
+    public void setRequisition_surface_conclusion(String requisition_surface_conclusion) {
+        this.requisition_surface_conclusion = requisition_surface_conclusion;
+    }
+
+    public String getRequisition_item_address() {
+        return requisition_item_address;
+    }
+
+    public void setRequisition_item_address(String requisition_item_address) {
+        this.requisition_item_address = requisition_item_address;
+    }
+
+    public String getRequisition_contact() {
+        return requisition_contact;
+    }
+
+    public void setRequisition_contact(String requisition_contact) {
+        this.requisition_contact = requisition_contact;
+    }
+
+    public String getRequisition_test_method() {
+        return requisition_test_method;
+    }
+
+    public void setRequisition_test_method(String requisition_test_method) {
+        this.requisition_test_method = requisition_test_method;
+    }
+
+    public String getRequisition_note() {
+        return requisition_note;
+    }
+
+    public void setRequisition_note(String requisition_note) {
+        this.requisition_note = requisition_note;
+    }
+
+    public String getRequisition_management_department() {
+        return requisition_management_department;
+    }
+
+    public void setRequisition_management_department(String requisition_management_department) {
+        this.requisition_management_department = requisition_management_department;
+    }
+
+    public String getRequisition_test_room() {
+        return requisition_test_room;
+    }
+
+    public void setRequisition_test_room(String requisition_test_room) {
+        this.requisition_test_room = requisition_test_room;
+    }
+
+    public String getRequisition_customer() {
+        return requisition_customer;
+    }
+
+    public void setRequisition_customer(String requisition_customer) {
+        this.requisition_customer = requisition_customer;
+    }
+
+    public String getRequisition_code() {
+        return requisition_code;
+    }
+
+    public void setRequisition_code(String requisition_code) {
+        this.requisition_code = requisition_code;
+    }
+
+    public String getRequisition_test_time() {
+        return requisition_test_time;
+    }
+
+    public void setRequisition_test_time(String requisition_test_time) {
+        this.requisition_test_time = requisition_test_time;
+    }
+
+    public String getRequisition_inspector() {
+        return requisition_inspector;
+    }
+
+    public void setRequisition_inspector(String requisition_inspector) {
+        this.requisition_inspector = requisition_inspector;
+    }
 
     public String getRequisition_exposuretime_hour() {
         return requisition_exposuretime_hour;

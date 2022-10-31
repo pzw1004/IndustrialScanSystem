@@ -1,6 +1,6 @@
 package com.industrialscansystem.Controller;
 
-import com.industrialscansystem.util.GetHostIp;
+import com.industrialscansystem.Controller.util.GetHostIp;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

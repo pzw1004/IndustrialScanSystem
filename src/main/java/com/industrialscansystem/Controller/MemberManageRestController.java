@@ -1,15 +1,11 @@
 package com.industrialscansystem.Controller;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.industrialscansystem.Bean.Member;
 import com.industrialscansystem.respository.MemberRespository;
-import com.industrialscansystem.util.LogUtils;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.sql.Date;
 import java.util.List;
 
@@ -95,6 +91,13 @@ public class MemberManageRestController {
     }
 
 
+    @RequestMapping(value = "/RestgetMemberById/{member_id}")
+    public Member getMemberByIdRest(@PathVariable("member_id") Integer member_id){
+
+        Member member = memberRespository.getMemberById(member_id);
+
+        return member;
+    }
     @RequestMapping(value = "/updateMemberById" ,method = RequestMethod.POST)
     public String updateMemberInfo(@RequestBody Member member){
 

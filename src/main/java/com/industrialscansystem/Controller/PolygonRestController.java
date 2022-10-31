@@ -1,6 +1,7 @@
 package com.industrialscansystem.Controller;
 
 import com.industrialscansystem.Bean.*;
+import com.industrialscansystem.Service.PolygonService;
 import com.industrialscansystem.respository.DamageStatisticVORespository;
 import com.industrialscansystem.respository.DamageTypeRespository;
 import com.industrialscansystem.respository.PictureRespository;
@@ -10,10 +11,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collections;
 import java.util.List;
 
 @RestController
 public class PolygonRestController {
+
+    @Autowired
+    private PolygonService polygonService;
     @Autowired
     private PolygonRespository polygonRespository;
 
@@ -27,6 +33,8 @@ public class PolygonRestController {
     public List<Polygon> getPicturePolygon(@RequestParam("picture_id") Integer picture_id){
 
         List<Polygon> polygonList = polygonRespository.selectPolygonListByPictureId(picture_id);
+        polygonList = polygonService.makeShift(polygonList);
+        Collections.sort(polygonList);
         return polygonList;
     }
 

@@ -3,6 +3,7 @@ package com.industrialscansystem.Bean;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.sql.Date;
 
 @Entity
 public class Product {
@@ -11,6 +12,8 @@ public class Product {
     @GeneratedValue
     private Integer product_id;
     private String product_name;
+
+
 
     public Integer getProduct_id() {
         return product_id;

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.industrialscansystem.Bean.Picture;
 import com.industrialscansystem.respository.PictureRespository;
-import com.industrialscansystem.util.EnvironmentPath;
+import com.industrialscansystem.Controller.util.EnvironmentPath;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -35,7 +35,7 @@ public class DetectionService {
      * @param picture
      * @return
      */
-    public JSONObject detectOneImage(Picture picture){
+    public JSONObject detectOneImage(Picture picture,int real_width){
         String aiIP = EnvironmentPath.getInstance().getAiIP();
         String sURL= aiIP+"/detectuploadfile_v2";
         //TODO 修改数据存储路径之后需要修改
@@ -46,6 +46,7 @@ public class DetectionService {
         HttpPost uploadFile = new HttpPost(sURL);
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.addTextBody("field1", "yes", ContentType.TEXT_PLAIN);
+        builder.addTextBody("width", String.valueOf(real_width), ContentType.TEXT_PLAIN);
         // 把文件加到HTTP的post请求中
         File f = new File(path);
         try {
@@ -85,7 +86,7 @@ public class DetectionService {
         return jsonObject;
     }
 
-    public String detectOneImage_v2(Picture picture){
+    public String detectOneImage_v2(Picture picture,int width){
         String res = null;
         String aiIP = EnvironmentPath.getInstance().getAiIP();
         String sURL= aiIP+"/detectuploadfile_v2";
@@ -99,6 +100,7 @@ public class DetectionService {
         HttpPost uploadFile = new HttpPost(sURL);
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.addTextBody("field1", "yes", ContentType.TEXT_PLAIN);
+        builder.addTextBody("width", String.valueOf(width), ContentType.TEXT_PLAIN);
         // 把文件加到HTTP的post请求中
         File f = new File(path);
         try {

@@ -55,7 +55,113 @@ public class Picture {
     private String picture_testmethod;
     private String picture_level;
     private String picture_jointform;
+    private String picture_cross_point;
+    private Integer picture_real_width;
+    private Integer picture_real_height;
+    private String picture_hanfeng_name;
+    private String picture_hanfeng_number;
+    private String picture_hanfeng_method;
+    private String picture_bevel_form;
+    private String picture_material_number;
+    private String picture_hanfeng_length;
+    private Float picture_testing_rate;
+    private String picture_hanfeng_testlength;
 
+    public void setPicture_real_width(Integer picture_real_width) {
+        this.picture_real_width = picture_real_width;
+    }
+
+    public void setPicture_real_height(Integer picture_real_height) {
+        this.picture_real_height = picture_real_height;
+    }
+
+    public String getPicture_hanfeng_name() {
+        return picture_hanfeng_name;
+    }
+
+    public void setPicture_hanfeng_name(String picture_hanfeng_name) {
+        this.picture_hanfeng_name = picture_hanfeng_name;
+    }
+
+    public String getPicture_hanfeng_number() {
+        return picture_hanfeng_number;
+    }
+
+    public void setPicture_hanfeng_number(String picture_hanfeng_number) {
+        this.picture_hanfeng_number = picture_hanfeng_number;
+    }
+
+    public String getPicture_hanfeng_method() {
+        return picture_hanfeng_method;
+    }
+
+    public void setPicture_hanfeng_method(String picture_hanfeng_method) {
+        this.picture_hanfeng_method = picture_hanfeng_method;
+    }
+
+    public String getPicture_bevel_form() {
+        return picture_bevel_form;
+    }
+
+    public void setPicture_bevel_form(String picture_bevel_form) {
+        this.picture_bevel_form = picture_bevel_form;
+    }
+
+    public String getPicture_material_number() {
+        return picture_material_number;
+    }
+
+    public void setPicture_material_number(String picture_material_number) {
+        this.picture_material_number = picture_material_number;
+    }
+
+    public String getPicture_hanfeng_length() {
+        return picture_hanfeng_length;
+    }
+
+    public void setPicture_hanfeng_length(String picture_hanfeng_length) {
+        this.picture_hanfeng_length = picture_hanfeng_length;
+    }
+
+    public Float getPicture_testing_rate() {
+        return picture_testing_rate;
+    }
+
+    public void setPicture_testing_rate(Float picture_testing_rate) {
+        this.picture_testing_rate = picture_testing_rate;
+    }
+
+    public String getPicture_hanfeng_testlength() {
+        return picture_hanfeng_testlength;
+    }
+
+    public void setPicture_hanfeng_testlength(String picture_hanfeng_testlength) {
+        this.picture_hanfeng_testlength = picture_hanfeng_testlength;
+    }
+
+    public Integer getPicture_real_width() {
+        return picture_real_width;
+    }
+
+    public void setPicture_real_width(int picture_real_width) {
+        this.picture_real_width = picture_real_width;
+    }
+
+    public Integer getPicture_real_height() {
+        return picture_real_height;
+    }
+
+    public void setPicture_real_height(int picture_real_height) {
+        this.picture_real_height = picture_real_height;
+    }
+
+    public String getPicture_cross_point() {
+        return picture_cross_point;
+    }
+
+    public void setPicture_cross_point(String picture_cross_point) {
+        this.picture_cross_point = picture_cross_point;
+    }
 
     public String getPicture_density() {
         return picture_density;

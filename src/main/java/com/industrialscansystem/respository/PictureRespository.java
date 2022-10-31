@@ -1,6 +1,7 @@
 package com.industrialscansystem.respository;
 
 import com.industrialscansystem.Bean.Picture;
+import com.industrialscansystem.Bean.PictureAndPolygon;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -115,5 +116,6 @@ public interface PictureRespository extends JpaRepository<Picture,Integer> {
     @Query(value = "select * from picture where picture_AIresult = 0 ",nativeQuery = true)
     List<Picture> getPictureWithOutDetection();
 
-
+    @Query(value = "SELECT new com.industrialscansystem.Bean.PictureAndPolygon(pic,pol,da) from Picture pic, Polygon pol, DamageType  da where pic.picture_requisition_id = ?1  AND pol.polygon_picture_id = pic.picture_id AND pol.polygon_damage_type = da.damagetype_id")
+    List<PictureAndPolygon> getPicturePolygon(Integer requisition_id);
 }

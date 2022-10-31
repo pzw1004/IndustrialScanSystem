@@ -1,22 +1,15 @@
 package com.industrialscansystem.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.industrialscansystem.Bean.*;
 import com.industrialscansystem.Config.SpringBeanUtil;
 import com.industrialscansystem.respository.PictureRespository;
 import com.industrialscansystem.respository.PolygonRespository;
 import com.industrialscansystem.respository.RetangleRespository;
-import com.industrialscansystem.util.EnvironmentPath;
-import com.industrialscansystem.util.JsonArrayLengthUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import com.industrialscansystem.Controller.util.EnvironmentPath;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -33,7 +26,7 @@ public class DetectionThread extends Thread {
     private RetangleRespository retangleRespository;
     private boolean isCyclically;//表示是否循环执行，在守护线程中，传入的是true，在单次执行的时候，传入的是false
     private int detectionId;
-
+    private int width;
     private PolygonRespository polygonRespository;
     /**
      * 循环执行检测的构造方法
@@ -53,8 +46,9 @@ public class DetectionThread extends Thread {
      * 只进行单次检测的构造方法
      * @param id
      */
-    public DetectionThread(int id){
+    public DetectionThread(int id,int width){
         this.detectionId = id;
+        this.width = width;
         this.isCyclically = false;
         this.pictureRespository = SpringBeanUtil.getBean(PictureRespository.class);
         this.detectionService = SpringBeanUtil.getBean(DetectionService.class);
@@ -69,7 +63,6 @@ public class DetectionThread extends Thread {
         System.out.println("开启执行线程"+this.getName());
 //        throw new NullPointerException();
         // 如果不循环执行，那么只执行一次
-
         if(isCyclically){
             // 如果循环执行，那么暂时设置执行100次
             int excuteTime = 100;
@@ -88,7 +81,7 @@ public class DetectionThread extends Thread {
 
 
                     System.out.println("====================if========================");
-                    String res = detectionService.detectOneImage_v2(picture);
+                    String res = detectionService.detectOneImage_v2(picture,width);
                     System.out.println(res);
 
 //                    DamageDetectMessage detectMessage = new DamageDetectMessage(jsonObject,picture.getPicture_id());
@@ -128,7 +121,7 @@ public class DetectionThread extends Thread {
             pictureRespository.save(pp);
             System.out.println("=======else=======");
             System.out.println(pp.getPicture_dir());
-            String res = detectionService.detectOneImage_v2(pp);
+            String res = detectionService.detectOneImage_v2(pp,width);
 
             System.out.println(res);
 
@@ -137,6 +130,7 @@ public class DetectionThread extends Thread {
             ResultFromDetection resultFromDetection = JSON.parseObject(res, ResultFromDetection.class);
 
 //            JSONArray ja = JSONArray.parseArray(res);
+            String[][] flawLength = resultFromDetection.getFlawLength();
             String[][] points = resultFromDetection.getPosition();
             String[][] beliefs = resultFromDetection.getBelief();
             String houdu = resultFromDetection.getHoudu();
@@ -202,6 +196,8 @@ public class DetectionThread extends Thread {
                         polygon.setPolygon_text_y(h);
                         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!" + beliefs[i][j] + "!!!!!!!!!!!!!!!!!!!!!!!!");
                         polygon.setPolygon_belief(Float.valueOf(beliefs[i][j]));
+                        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!" + flawLength[i][j] + "!!!!!!!!!!!!!!!!!!!!!!!!");
+                        polygon.setPolygon_flaw_length(Float.parseFloat(flawLength[i][j]));
                         polygonRespository.save(polygon);
                     }
                 }

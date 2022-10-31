@@ -19,8 +19,8 @@ public interface RequisitionRespository extends JpaRepository<Requisition,Intege
     public void  updateRequisitionFirstExamByShenfenAndId(String firstexam ,Integer id);
 
     @Modifying
-    @Query(value = "select * from requisition ,product where requisition_id=?1 and damagetype_id=?2 and requisition.requisition_product_id =product.product_id",nativeQuery = true)
-    public List<Requisition>  selectRequisitionByproductId(Integer r1 ,Integer r2);
+    @Query(value = "select * from requisition where requisition_product_id=?1 order by requisition_id desc",nativeQuery = true)
+    public List<Requisition>  selectRequisitionListByproductId(Integer r1);
 
     @Modifying
     @Query(value = "update requisition set requisition_secondexam=?1 where requisition_id=?2",nativeQuery = true)

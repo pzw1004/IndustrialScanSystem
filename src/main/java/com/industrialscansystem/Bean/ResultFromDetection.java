@@ -3,8 +3,18 @@ package com.industrialscansystem.Bean;
 public class ResultFromDetection {
     public String[][] position;
     public String[][] belief;
+
+    public String[][] flawLength;
     public String houdu;
     public String[] edge;
+
+    public String[][] getFlawLength() {
+        return flawLength;
+    }
+
+    public void setFlawLength(String[][] flawLength) {
+        this.flawLength = flawLength;
+    }
 
     public String getHoudu() {
         return houdu;

@@ -28,5 +28,4 @@ public class PersonalPageRestController {
         return member;
     }
 
-
 }
