@@ -627,7 +627,8 @@ public class RequisitionRestContorller {
     @RequestMapping(value = "/completeApproval")
     public List<Requisition> completeApproval(@RequestParam("requisition_id") Integer requisition_id,
                                               @RequestParam("requisition_state") Integer requisition_state,
-                                              @RequestParam("member_id") Integer member_id) {
+                                              @RequestParam("member_id") Integer member_id,
+                                              @RequestParam("product_id") Integer product_id) {
         Requisition requisition = requisitionRespository.getRequisitionById(requisition_id);
         System.out.println("申请通过-------------------------");
         System.out.println(requisition_state);
@@ -664,12 +665,13 @@ public class RequisitionRestContorller {
             requisitionRespository.save(requisition);
         }
 
-        return requisitionRespository.findAll();
+        return requisitionRespository.selectRequisitionListByproductId(product_id);
     }
 
     @RequestMapping(value = "/rejectRequest")
     public List<Requisition> rejectRequest(@RequestParam("requisition_id") Integer requisition_id,
-                                           @RequestParam("requisition_state") Integer requisition_state) {
+                                           @RequestParam("requisition_state") Integer requisition_state,
+                                           @RequestParam("product_id") Integer product_id) {
         Requisition requisition = requisitionRespository.getRequisitionById(requisition_id);
         System.out.println("申请驳回-------------------------");
         System.out.println(requisition_state);
@@ -702,7 +704,7 @@ public class RequisitionRestContorller {
             requisitionRespository.save(requisition);
         }
 
-        return requisitionRespository.findAll();
+        return requisitionRespository.selectRequisitionListByproductId(product_id);
     }
 
 }
