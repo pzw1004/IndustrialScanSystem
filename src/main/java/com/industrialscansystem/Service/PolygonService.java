@@ -2,6 +2,7 @@ package com.industrialscansystem.Service;
 
 import java.util.Arrays;
 
+import com.industrialscansystem.Bean.Picture;
 import com.industrialscansystem.Bean.Polygon;
 import com.industrialscansystem.respository.PolygonRespository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,16 +48,19 @@ public class PolygonService {
         }
 
     }
-    public void getPolygon_flaw_position_xy(int picture_id,String crossxy) {
+    public void getPolygon_flaw_position_xy(int picture_id, String crossxy, Picture picture) {
         List<Polygon> polygonList = polygonRespository.selectPolygonListByPictureId(picture_id);
         int[] center = new int[2];
         int[] cross_pt = new int[2];
+        int real_width = picture.getPicture_real_width();
         cross_pt[0] = Integer.parseInt(crossxy.split(",")[0]);
         cross_pt[1] = Integer.parseInt(crossxy.split(",")[1]) -100;
         for (Polygon p : polygonList) {
             center =getCenter_pt(parsePolygon_pt(p.getPolygon_pt()));
-            p.setPolygon_flaw_position_x(center[0]-cross_pt[0]);
-            p.setPolygon_flaw_position_y(-(center[1]-cross_pt[1]));
+            int px = Math.round((center[0]-cross_pt[0])/1000 * real_width);
+            int py = Math.round((center[0]-cross_pt[0])/300 * 100);
+            p.setPolygon_flaw_position_x(px);
+            p.setPolygon_flaw_position_y(-(py));
             polygonRespository.save(p);
         }
 

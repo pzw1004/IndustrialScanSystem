@@ -104,7 +104,7 @@ public class PictureManageResController {
     public Picture updatePictureCross(@PathVariable("crossxy") String crossxy,@PathVariable("picture_id") int picture_id){
         Picture picture = pictureRespository.getPictureById(picture_id);
         picture.setPicture_cross_point(crossxy);
-        polygonService.getPolygon_flaw_position_xy(picture_id,crossxy);
+        polygonService.getPolygon_flaw_position_xy(picture_id,crossxy,picture);
         pictureRespository.save(picture);
         return picture;
     }
