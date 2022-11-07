@@ -57,10 +57,11 @@ public class PolygonService {
         cross_pt[1] = Integer.parseInt(crossxy.split(",")[1]) -100;
         for (Polygon p : polygonList) {
             center =getCenter_pt(parsePolygon_pt(p.getPolygon_pt()));
-            int px = Math.round((center[0]-cross_pt[0])/1000 * real_width);
-            int py = Math.round((center[0]-cross_pt[0])/300 * 100);
+//            float a = (float) (center[0]-cross_pt[0])/1000 * (float)real_width;
+            int px = Math.round((float)(center[0]-cross_pt[0])/1000 * (float)real_width);
+            int py = Math.round(-(float)(center[1]-cross_pt[1])/300 * (float)100);
             p.setPolygon_flaw_position_x(px);
-            p.setPolygon_flaw_position_y(-(py));
+            p.setPolygon_flaw_position_y((py));
             polygonRespository.save(p);
         }
 

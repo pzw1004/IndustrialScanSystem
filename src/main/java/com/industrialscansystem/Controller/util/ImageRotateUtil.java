@@ -8,12 +8,6 @@ import java.io.File;
 import java.io.IOException;
 
 import cn.hutool.core.img.ImgUtil;
-import cn.hutool.core.io.FileUtil;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
-import org.opencv.core.Point;
 /**
  * Author Mythos_Q
  *

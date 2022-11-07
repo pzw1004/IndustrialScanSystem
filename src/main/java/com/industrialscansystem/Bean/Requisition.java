@@ -325,14 +325,9 @@ public class Requisition {
         this.requisition_intensifyscreen_behind = requisition_intensifyscreen_behind;
     }
 
-    public Integer getRequistion_product_id() {
-        return requisition_product_id;
+    public void setRequisition_product_id(Integer requisition_product_id) {
+        this.requisition_product_id = requisition_product_id;
     }
-
-    public void setRequisition_product_id(Integer requistion_product_id) {
-        this.requisition_product_id = requistion_product_id;
-    }
-
 
     public Integer getRequisition_last_thickness() {
         return requisition_last_thickness;
