@@ -1,4 +1,4 @@
-package com.industrialscansystem.Service;
+package com.industrialscansystem.respository.Service;
 
 import com.industrialscansystem.Bean.Log;
 import com.industrialscansystem.Bean.Member;

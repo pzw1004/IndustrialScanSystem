@@ -1,4 +1,4 @@
-package com.industrialscansystem.Service;
+package com.industrialscansystem.respository.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.industrialscansystem.Bean.*;
@@ -46,9 +46,8 @@ public class DetectionThread extends Thread {
      * 只进行单次检测的构造方法
      * @param id
      */
-    public DetectionThread(int id,int width){
+    public DetectionThread(int id){
         this.detectionId = id;
-        this.width = width;
         this.isCyclically = false;
         this.pictureRespository = SpringBeanUtil.getBean(PictureRespository.class);
         this.detectionService = SpringBeanUtil.getBean(DetectionService.class);
@@ -81,7 +80,7 @@ public class DetectionThread extends Thread {
 
 
                     System.out.println("====================if========================");
-                    String res = detectionService.detectOneImage_v2(picture,width);
+                    String res = detectionService.detectOneImage_v2(picture);
                     System.out.println(res);
 
 //                    DamageDetectMessage detectMessage = new DamageDetectMessage(jsonObject,picture.getPicture_id());
@@ -121,7 +120,7 @@ public class DetectionThread extends Thread {
             pictureRespository.save(pp);
             System.out.println("=======else=======");
             System.out.println(pp.getPicture_dir());
-            String res = detectionService.detectOneImage_v2(pp,width);
+            String res = detectionService.detectOneImage_v2(pp);
 
             System.out.println(res);
 
@@ -129,87 +128,25 @@ public class DetectionThread extends Thread {
 
             ResultFromDetection resultFromDetection = JSON.parseObject(res, ResultFromDetection.class);
 
-//            JSONArray ja = JSONArray.parseArray(res);
-            String[][] flawLength = resultFromDetection.getFlawLength();
-            String[][] points = resultFromDetection.getPosition();
-            String[][] beliefs = resultFromDetection.getBelief();
-            String houdu = resultFromDetection.getHoudu();
-            String[] edge = resultFromDetection.getEdge();
-            for(int i = 0; i < points.length; i++){
-//                JSONArray ja_item = JSONArray.parseArray(ja.getString(i));
-//                points[i] = new String[ja_item.size()];
-                for(int j = 0; j < points[i].length; j++) {
-//                    points[i][j] = ja_item.getString(j);
-                    System.out.println("=======================" + i + ", " + j + "========================");
-                    System.out.println(points[i][j]);
-                }
-            }
-//            JSONArray ja1 = JSONArray.parseArray(ja.getString(0));
-//            System.out.println(ja1.getString(0));
-
-//            int beginIndex = 1;
-//            int endIndex = res.length()-1;
-//            String res_sub = res.substring(beginIndex,endIndex);
-//            res_sub = res_sub.substring(1,res_sub.length()-1);
-//            System.out.println(res_sub);
-//
-//            String[] str_arr = res_sub.split("\",");
-
             try{
                 polygonRespository.deletePolygonListByPictureId(pp.getPicture_id());
-
-                Polygon polygon1 = new Polygon();
-                polygon1.setPolygon_pt(edge[0]);
-                polygon1.setPolygon_picture_id(pp.getPicture_id());
-                polygon1.setPolygon_author("Algorithm");
-                polygon1.setPolygon_damage_type(6);
-                polygonRespository.save(polygon1);
-//                pictureRespository.updatePicture_thicknessById(Integer.parseInt(houdu),pp.getPicture_id());
-                for(int i = 0; i < points.length; i++){
-                    for(int j = 0; j < points[i].length; j++){
-                        String detect_list=points[i][j];
-                        System.out.println("============chuli========");
-                        System.out.println("==============22=========");
-                        System.out.println("第"+ (i + 1) + "类， 第" + (j + 1) + "个点");
-                        System.out.println(detect_list);
-                        if (detect_list == null || "".equals(detect_list)) {
-                            break;
-                        }
-                        int lastIndex = detect_list.lastIndexOf(" ");
-                        // 缺陷点
-                        String detect_points = detect_list.substring(0,lastIndex);
-                        // top点
-                        String top_wh = detect_list.substring(lastIndex+1, detect_list.length());
-                        int w = Integer.parseInt(top_wh.split(",")[0]);
-                        int h = Integer.parseInt(top_wh.split(",")[1]);
-                        System.out.println(detect_points);
-                        System.out.println(w+" " + h);
-
-                        System.out.println("picture id:" + pp.getPicture_id());
-                        // polygon
-                        Polygon polygon = new Polygon();
-                        polygon.setPolygon_pt(detect_points);
-                        polygon.setPolygon_picture_id(pp.getPicture_id());
-                        polygon.setPolygon_author("Algorithm");
-                        polygon.setPolygon_damage_type(i);
-                        polygon.setPolygon_text_x(w);
-                        polygon.setPolygon_text_y(h);
-                        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!" + beliefs[i][j] + "!!!!!!!!!!!!!!!!!!!!!!!!");
-                        polygon.setPolygon_belief(Float.valueOf(beliefs[i][j]));
-                        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!" + flawLength[i][j] + "!!!!!!!!!!!!!!!!!!!!!!!!");
-                        polygon.setPolygon_flaw_length(Float.parseFloat(flawLength[i][j]));
-                        polygonRespository.save(polygon);
-                    }
+                List<String> positions = resultFromDetection.getPosition();
+                List<String> types = resultFromDetection.getFlaw_type();
+                List<String> beliefs = resultFromDetection.getBeliefs();
+                for(int i=0;i<resultFromDetection.getPosition().size();i++){
+                    Polygon polygon = new Polygon();
+                    polygon.setPolygon_picture_id(this.detectionId);
+                    polygon.setPolygon_pt(positions.get(i));
+                    polygon.setPolygon_belief(Float.valueOf(beliefs.get(i)));
+                    polygon.setPolygon_damage_type(Math.round(Float.valueOf(types.get(i))));
+                    polygonRespository.save(polygon);
                 }
+
+
             }
             catch (Exception e)
             {
                 System.out.println("检测出错");
-            }
-            finally {
-                pp.setPicture_dir(tempDir);
-                pictureRespository.save(pp);
-                pictureRespository.updatePicture_thicknessById(Integer.parseInt(houdu),pp.getPicture_id());
             }
 //            try
 //            {

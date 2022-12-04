@@ -66,6 +66,24 @@ public class Picture {
     private String picture_hanfeng_length;
     private Float picture_testing_rate;
     private String picture_hanfeng_testlength;
+    private String picture_woliu_dir;
+    private String picture_chaosheng_dir;
+
+    public String getPicture_woliu_dir() {
+        return picture_woliu_dir;
+    }
+
+    public void setPicture_woliu_dir(String picture_woliu_dir) {
+        this.picture_woliu_dir = picture_woliu_dir;
+    }
+
+    public String getPicture_chaosheng_dir() {
+        return picture_chaosheng_dir;
+    }
+
+    public void setPicture_chaosheng_dir(String picture_chaosheng_dir) {
+        this.picture_chaosheng_dir = picture_chaosheng_dir;
+    }
 
     public void setPicture_real_width(Integer picture_real_width) {
         this.picture_real_width = picture_real_width;

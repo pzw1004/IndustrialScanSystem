@@ -1,4 +1,4 @@
-package com.industrialscansystem.Service;
+package com.industrialscansystem.respository.Service;
 
 /**
  * @Author 宋宗垚

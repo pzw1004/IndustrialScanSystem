@@ -1,4 +1,4 @@
-package com.industrialscansystem.Service;
+package com.industrialscansystem.respository.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -86,7 +86,7 @@ public class DetectionService {
         return jsonObject;
     }
 
-    public String detectOneImage_v2(Picture picture,int width){
+    public String detectOneImage_v2(Picture picture){
         String res = null;
         String aiIP = EnvironmentPath.getInstance().getAiIP();
         String sURL= aiIP+"/detectuploadfile_v2";
@@ -100,7 +100,6 @@ public class DetectionService {
         HttpPost uploadFile = new HttpPost(sURL);
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.addTextBody("field1", "yes", ContentType.TEXT_PLAIN);
-        builder.addTextBody("width", String.valueOf(width), ContentType.TEXT_PLAIN);
         // 把文件加到HTTP的post请求中
         File f = new File(path);
         try {

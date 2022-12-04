@@ -1,4 +1,4 @@
-package com.industrialscansystem.Service;
+package com.industrialscansystem.respository.Service;
 
 public class sendToApitestService {
 //    public String sendTo(Picture p, List<Polygon> polygons){

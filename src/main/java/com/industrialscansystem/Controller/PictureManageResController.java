@@ -3,10 +3,10 @@ package com.industrialscansystem.Controller;
 import com.alibaba.fastjson.JSONObject;
 import com.industrialscansystem.Bean.*;
 import com.industrialscansystem.Mapper.PictureMapper;
-import com.industrialscansystem.Service.DetectionService;
-import com.industrialscansystem.Service.DetectionThread;
-import com.industrialscansystem.Service.PictureManageService;
-import com.industrialscansystem.Service.PolygonService;
+import com.industrialscansystem.respository.Service.DetectionService;
+import com.industrialscansystem.respository.Service.DetectionThread;
+import com.industrialscansystem.respository.Service.PictureManageService;
+import com.industrialscansystem.respository.Service.PolygonService;
 import com.industrialscansystem.respository.DamageStatisticVORespository;
 import com.industrialscansystem.respository.PictureRespository;
 import com.industrialscansystem.respository.PolygonRespository;
@@ -298,12 +298,12 @@ public class PictureManageResController {
      */
     @PostMapping("/detectionById_backstage/{id}/{width}")
     @ResponseBody
-    public List<Retangle> detectionByIdBackstage(@PathVariable("id") Integer picture_id,@PathVariable("width") int width) throws InterruptedException {
+    public List<Retangle> detectionByIdBackstage(@PathVariable("id") Integer picture_id) throws InterruptedException {
         Picture picture = pictureRespository.findOne(picture_id);
 
 
         retangleRespository.deleteAIRetangleListByPictureId(picture_id);
-        DetectionThread detectionThread = new DetectionThread(picture.getPicture_id(),width);
+        DetectionThread detectionThread = new DetectionThread(picture.getPicture_id());
         System.out.println(picture.getPicture_id());
         detectionThread.start();
         detectionThread.join();

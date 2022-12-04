@@ -1,6 +1,6 @@
 package com.industrialscansystem.Controller;
 
-import com.industrialscansystem.Service.LogSaveService;
+import com.industrialscansystem.respository.Service.LogSaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

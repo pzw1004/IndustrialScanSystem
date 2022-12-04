@@ -1,8 +1,7 @@
 package com.industrialscansystem.Controller;
 
 import com.industrialscansystem.Bean.*;
-import com.industrialscansystem.Service.PolygonService;
-import com.industrialscansystem.respository.DamageStatisticVORespository;
+import com.industrialscansystem.respository.Service.PolygonService;
 import com.industrialscansystem.respository.DamageTypeRespository;
 import com.industrialscansystem.respository.PictureRespository;
 import com.industrialscansystem.respository.PolygonRespository;

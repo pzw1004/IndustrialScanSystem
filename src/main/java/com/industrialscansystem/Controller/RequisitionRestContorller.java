@@ -3,7 +3,7 @@ package com.industrialscansystem.Controller;
 import com.industrialscansystem.Bean.*;
 import com.industrialscansystem.Config.RequiredTypes;
 import com.industrialscansystem.Mapper.RequisitionMapper;
-import com.industrialscansystem.Service.RequisitionService;
+import com.industrialscansystem.respository.Service.RequisitionService;
 import com.industrialscansystem.respository.*;
 import com.industrialscansystem.Controller.util.DeleteFileUtil;
 import com.industrialscansystem.Controller.util.ImageTransUtil;
@@ -66,7 +66,7 @@ public class RequisitionRestContorller {
 
 
     @RequestMapping(value = "/uploadFileList/{requisition_id}")
-    public void uploadFileList(@PathParam("uploadFile") MultipartFile[] uploadFile,
+    public void uploadFileList(@PathParam("uploadFile") MultipartFile[] uploadFile,@PathParam("uploadFile2") MultipartFile[] uploadFile2,@PathParam("uploadFile3") MultipartFile[] uploadFile3,
                                @PathVariable("requisition_id") int requisition_id
     ) throws IllegalStateException, IOException {
         int index = 0;
@@ -80,8 +80,12 @@ public class RequisitionRestContorller {
         String destination = tomcatPath + requisition.getRequisition_number();
         //String destination = "A:\\documents\\labwork\\weldproject\\code\\apache-tomcat-8.5.43\\webapps\\XrayImageDB\\" + requisition.getRequisition_number();
         for (MultipartFile multipartFile : uploadFile) {
+            MultipartFile up2 = uploadFile2[index];
+            MultipartFile up3 = uploadFile3[index];
             saveUploadFile.saveFile(multipartFile, destination);
-
+            saveUploadFile.saveFile(up2, destination);
+            saveUploadFile.saveFile(up3, destination);
+            index = index+1;
             //////////////////////////////
             String filepath = multipartFile.getOriginalFilename();
             File temp = new File(filepath);
@@ -92,16 +96,26 @@ public class RequisitionRestContorller {
             System.out.println("=============================");
             System.out.println("uploadFile" + uploadFile);
             String tempTifName = multipartFile.getOriginalFilename();
+            String tempTifName2 = up2.getOriginalFilename();
+            String tempTifName3= up3.getOriginalFilename();
             //可以去掉后缀名
             System.out.println("tempTifName" + tempTifName);
             String tempTifFileName = tempTifName.trim();
+            String tempTifFileName2 = tempTifName2.trim();
+            String tempTifFileName3 = tempTifName3.trim();
             System.out.println("tempTifFileName" + tempTifFileName);
             String tifFileName = tempTifFileName.substring(tempTifFileName.lastIndexOf("\\") + 1);
+            String tifFileName2 = tempTifFileName2.substring(tempTifFileName2.lastIndexOf("\\") + 1);
+            String tifFileName3 = tempTifFileName3.substring(tempTifFileName3.lastIndexOf("\\") + 1);
             System.out.println("tifFileName" + tifFileName);
             String tifName = tifFileName.substring(0, tifFileName.lastIndexOf("."));
+            String tifName2 = tifFileName2.substring(0, tifFileName2.lastIndexOf("."));
+            String tifName3 = tifFileName3.substring(0, tifFileName3.lastIndexOf("."));
             System.out.println("tifName" + tifName);
             Date date = new Date(System.currentTimeMillis());
             String dir = requisition.getRequisition_number() + "//" + tifFileName;
+            String dir2 = requisition.getRequisition_number() + "//" + tifFileName2;
+            String dir3 = requisition.getRequisition_number() + "//" + tifFileName3;
             System.out.println("dir" + dir);
             String houzui = multipartFile.getContentType();
             System.out.println("houzui" + houzui);
@@ -112,6 +126,8 @@ public class RequisitionRestContorller {
             }
 
             String filePath = tomcatPath + dir;
+            String filePath2 = tomcatPath + dir2;
+            String filePath3 = tomcatPath + dir3;
             //String filePath="A:\\documents\\labwork\\weldproject\\code\\apache-tomcat-8.5.43\\webapps\\XrayImageDB\\"+dir;
             //     String tempPath = "D:\\tomcat\\apache-tomcat-8.5.43-windows-x64\\apache-tomcat-8.5.43\\webapps\\XrayImageDB\\AJ0006AJ\\VIDARImage18.tif";
 
@@ -182,6 +198,8 @@ public class RequisitionRestContorller {
                     if (p.getPicture_dir().equals("空")) {
                         BufferedImage sourceImg = ImageIO.read(new FileInputStream(filePath));
                         p.setPicture_dir(dir);
+                        p.setPicture_woliu_dir(dir2);
+                        p.setPicture_chaosheng_dir(dir3);
                         p.setPicture_number(tifName);
                         p.setPicture_entrytime(date);
                         p.setPicture_height(sourceImg.getHeight());
@@ -192,6 +210,8 @@ public class RequisitionRestContorller {
                         Picture pictureP = new Picture();
                         pictureP.setPicture_requisition_id(requisition_id);
                         pictureP.setPicture_dir(dir);
+                        pictureP.setPicture_woliu_dir(dir2);
+                        pictureP.setPicture_chaosheng_dir(dir3);
                         pictureP.setPicture_number(tifName);
                         pictureP.setPicture_entrytime(date);
                         pictureP.setPicture_height(sourceImg.getHeight());
@@ -203,6 +223,8 @@ public class RequisitionRestContorller {
                     Picture pictureP = new Picture();
                     pictureP.setPicture_requisition_id(requisition_id);
                     pictureP.setPicture_dir(dir);
+                    pictureP.setPicture_woliu_dir(dir2);
+                    pictureP.setPicture_chaosheng_dir(dir3);
                     pictureP.setPicture_number(tifName);
                     pictureP.setPicture_entrytime(date);
                     pictureP.setPicture_height(sourceImg.getHeight());
@@ -210,51 +232,7 @@ public class RequisitionRestContorller {
                     pictureRespository.save(pictureP);
                 }
 
-                index++;
             }
-
-
-            //亚东学长老方法，先转换为jpg读取宽和高，速度巨慢
-//            if(houzui.equals("image/tiff"))
-//            {
-//                String transPath;
-//                try {
-//                    transPath = ImageTransUtil.convertImage(filePath);
-//                    System.out.println("transPath"+transPath);
-//                    File temppicture = new File(transPath);
-//                    BufferedImage sourceImg = ImageIO.read(new FileInputStream(temppicture));
-//
-//                    Picture picture = new Picture();
-//                    picture.setPicture_requisition_id(requisition_id);
-//                    picture.setPicture_dir(dir);
-//                    picture.setPicture_number(tifName);
-//                    picture.setPicture_entrytime(date);
-//                    picture.setPicture_height(sourceImg.getHeight());
-//                    System.out.println("height:"+sourceImg.getHeight());
-//                    picture.setPicture_width(sourceImg.getWidth());
-//                    System.out.println("weight:"+sourceImg.getWidth());
-//                    pictureRespository.save(picture);
-//                    System.gc();
-////                    temppicture.delete();
-//                    File deleteFile = new File(transPath);
-//                    deleteFile.delete();
-//
-//                } catch (Exception e) {
-//                    System.out.println("转格式异常");
-//                }
-//            }else {
-//                BufferedImage sourceImg = ImageIO.read(new FileInputStream(filePath));
-//                Picture pictureP = new Picture();
-//                pictureP.setPicture_requisition_id(requisition_id);
-//                pictureP.setPicture_dir(dir);
-//                pictureP.setPicture_number(tifName);
-//                pictureP.setPicture_entrytime(date);
-//                pictureP.setPicture_height(sourceImg.getHeight());
-//                pictureP.setPicture_width(sourceImg.getWidth());
-//                pictureRespository.save(pictureP);
-//
-//            }
-
 
         }
 
